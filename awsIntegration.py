@@ -9,4 +9,4 @@ def uploadFile(fileName):
 	start = time.time()
 	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
 	conn.upload(fileName, open(fileName,'rb'), BUCKET_ID)
-	return (time.time() - start)
+	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(BUCKET_ID, fileName)
