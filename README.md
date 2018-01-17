@@ -1,2 +1,2 @@
-# AlexHablo
-Implement Alternative Voices into the Amazon Echo Ecosystem
+# Echo Linguistics
+Using Alexa's Speech Synthesis Markup Language Support to Extend Amazon Echo Voice Capabilities
