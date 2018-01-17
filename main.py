@@ -18,7 +18,9 @@ def generateSSML(text, region=None):
 	url = generateURL(text, region.lower())
 	mp3File = saveMP3(url)
 	editMP3(mp3File)
-	return awsIntegration.uploadFile(mp3File)
+	fileName = awsIntegration.uploadFile(mp3File)
+	os.system('rm {}'.format(mp3File))
+	return fileName
 
 def saveMP3(mp3URL):
 	#return MP3 file name
