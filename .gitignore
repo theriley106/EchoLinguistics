@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+secretCode.txt
+accessKey.txt
+bucketID.txt
+*.pyc
