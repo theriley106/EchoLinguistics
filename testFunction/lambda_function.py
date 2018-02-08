@@ -23,6 +23,13 @@ def createmp3List():
 	if os.path.exists("/tmp/mp3List.txt") == False:
 		os.system("touch /tmp/mp3List.txt")
 
+def returnLanguageAbbrFromFull(fullLanguage):
+	for value in getListOfLanguages():
+		#value type = dict
+		if fullLanguage == value["Full_Name"]:
+			#the language that the user
+			return value["Abbreviation"].lower()
+
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
 	intent_name = intent_request["intent"]["name"]
@@ -33,11 +40,8 @@ def on_intent(intent_request, session):
 		except:
 			language = "English"
 			#else defaults as English
-		for value in getListOfLanguages():
-			#value type = dict
-			if language == value["Full_Name"]:
-				#the
-				languageAbbreviation = value["Abbreviation"].lower()
+		languageAbbreviation = returnLanguageAbbrFromFull(language)
+		#Defines the abbreviated version of the language sent in the request
 		accent = intent['slots']['accentVal']['value']
 		for value in listOfLanguages:
 			if accent == value["Full_Name"]:
