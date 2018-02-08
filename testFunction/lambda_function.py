@@ -4,6 +4,7 @@ import os
 from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
 TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
+
 def checkInFile(region):
 	for val in open('/tmp/mp3List.txt').read().split("\n"):
 		if region == val:
@@ -15,19 +16,23 @@ def translateText(text, toLanguage, fromLanguage="en"):
 	translation = translator.translate(text, dest=toLanguage)
 	return translation.text
 
-def on_intent(intent_request, session):
+def getListOfLanguages(languageList='supportedLanguages.json'):
+	return json.load(open("supportedLanguages.json"))
+
+def createmp3List():
 	if os.path.exists("/tmp/mp3List.txt") == False:
 		os.system("touch /tmp/mp3List.txt")
+
+def on_intent(intent_request, session):
 	intent = intent_request["intent"]
-	print intent
 	intent_name = intent_request["intent"]["name"]
 	if intent_name == 'useAccent':
 		try:
 			language = intent['slots']['language']['value']
 		except:
 			language = "English"
-		listOfLanguages = json.load(open("supportedLanguages.json"))
-		for value in listOfLanguages:
+		for value in getListOfLanguages():
+			#value type = dict
 			if language == value["Full_Name"]:
 				languageAbbreviation = value["Abbreviation"].lower()
 		accent = intent['slots']['accentVal']['value']
@@ -162,6 +167,6 @@ def handle_session_end_request():
 	  }
 	}
 
-
+createmp3List()
 if __name__ == '__main__':
 	on_intent({'intent': {'slots': {'language': {'value': 'Spanish'}}, 'name': 'saySomething'}, 'name': ''}, "")
