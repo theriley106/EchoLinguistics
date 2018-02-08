@@ -36,6 +36,11 @@ def generateText(language, accent, languageAbbreviation):
 	else:
 		return TEXT_TO_SAY.format(language, accent)
 
+def genPayload(text, accentAbbreviation):
+	return json.dumps({
+			  "Text": text,
+			  "Region": accentAbbreviation
+			})
 
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
@@ -56,13 +61,10 @@ def on_intent(intent_request, session):
 		text = generateText(language, accent, languageAbbreviation)
 		# generate text that gets returned
 		print("tell me something in {} in a {} accent".format(language, accent))
-		#purely for debug reasons
-		f = {
-			  "Text": text,
-			  "Region": accentAbbreviation
-			}
 		print("Accent: {}".format(f))
-		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=json.dumps(f))
+		#purely for debug reasons
+		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
+		# This is the lambda function that generates the ssml object
 		return {
 		"version": "1.0",
 		"sessionAttributes": {},
