@@ -1,20 +1,62 @@
 from boto3 import client as botoClient
 import json
 import os
+from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
-
+TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
 def checkInFile(region):
 	for val in open('/tmp/mp3List.txt').read().split("\n"):
 		if region == val:
 			return True
 	return False
-	
+
+def translateText(text, toLanguage, fromLanguage="en"):
+	translator = Translator()
+	translation = translator.translate(text, dest=toLanguage)
+	return translation.text
+
 def on_intent(intent_request, session):
 	if os.path.exists("/tmp/mp3List.txt") == False:
 		os.system("touch /tmp/mp3List.txt")
 	intent = intent_request["intent"]
 	print intent
 	intent_name = intent_request["intent"]["name"]
+	if intent_name == 'useAccent':
+		try:
+			language = intent['slots']['language']['value']
+		except:
+			language = "English"
+		listOfLanguages = json.load(open("supportedLanguages.json"))
+		for value in listOfLanguages:
+			if language == value["Full_Name"]:
+				languageAbbreviation = value["Abbreviation"].lower()
+		accent = intent['slots']['accentVal']['value']
+		for value in listOfLanguages:
+			if accent == value["Full_Name"]:
+				accentAbbreviation = value["Abbreviation"].lower()
+		if languageAbbreviation != "en":
+			text = translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
+		else:
+			text = TEXT_TO_SAY.format(language, accent)
+		print("tell me something in {} in a {} accent".format(language, accent))
+		f = {
+			  "Text": text,
+			  "Region": accentAbbreviation
+			}
+		print("Accent: {}".format(f))
+		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=json.dumps(f))
+		return {
+		"version": "1.0",
+		"sessionAttributes": {},
+		"response": {
+			"outputSpeech":
+			{
+			      "type": "SSML",
+			      "ssml": "<speak><audio src='https://s3.amazonaws.com/nucilohackathonbucket/{}.mp3'/></speak>".format(accentAbbreviation)
+	    			},
+					"shouldEndSession": True
+				  }
+		}
 	if intent_name == 'saySomething':
 		try:
 			abbr = intent['slots']['language']['value'].title()
@@ -28,9 +70,10 @@ def on_intent(intent_request, session):
 			region = "es"
 		if checkInFile(region) == False:
 			f = {
-				  "Text": "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking in a {} accent".format(abbr),
+				  "Text": translateText("I was successfully able to modify the Amazon Alexa voice.  Here it is speaking in {}".format(abbr), toLanguage=region),
 				  "Region": region
 				}
+			print("Say Something: {}".format(f))
 			lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=json.dumps(f))
 			# this invokes the lambda function that makes the quote
 			with open('/tmp/mp3List.txt', 'a') as file:
@@ -39,7 +82,7 @@ def on_intent(intent_request, session):
 		"version": "1.0",
 		"sessionAttributes": {},
 		"response": {
-			"outputSpeech": 
+			"outputSpeech":
 			{
 			      "type": "SSML",
 			      "ssml": "<speak><audio src='https://s3.amazonaws.com/nucilohackathonbucket/{}.mp3'/></speak>".format(region)
@@ -78,7 +121,7 @@ def lambda_handler(event, context):
 def get_help_response():
 	output = "Please ask me to generate a scramble.  You can also ask about the Developer of this application.  What can I help you with?"
 	return returnSpeech(output, False)
-		
+
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
 	return {
 		"outputSpeech": {
@@ -97,7 +140,7 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
 			}
 		},
 		"shouldEndSession": should_end_session
-	}		
+	}
 
 def build_response(session_attributes, speechlet_response):
 	return {
@@ -105,7 +148,7 @@ def build_response(session_attributes, speechlet_response):
 		"sessionAttributes": session_attributes,
 		"response": speechlet_response
 	}
-	
+
 def handle_session_end_request():
 	return {
 	"version": "1.0",
