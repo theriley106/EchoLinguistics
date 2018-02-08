@@ -30,6 +30,13 @@ def returnLanguageAbbrFromFull(fullLanguage):
 			#the language that the user
 			return value["Abbreviation"].lower()
 
+def generateText(language, accent, languageAbbreviation):
+	if languageAbbreviation != "en":
+			return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
+	else:
+		return TEXT_TO_SAY.format(language, accent)
+
+
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
 	intent_name = intent_request["intent"]["name"]
@@ -46,11 +53,10 @@ def on_intent(intent_request, session):
 		# defines the accent language
 		accentAbbreviation = returnLanguageAbbrFromFull(accent)
 		# returns accent abbreviation
-		if languageAbbreviation != "en":
-			text = translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
-		else:
-			text = TEXT_TO_SAY.format(language, accent)
+		text = generateText(language, accent, languageAbbreviation)
+		# generate text that gets returned
 		print("tell me something in {} in a {} accent".format(language, accent))
+		#purely for debug reasons
 		f = {
 			  "Text": text,
 			  "Region": accentAbbreviation
