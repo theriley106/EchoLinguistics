@@ -43,9 +43,9 @@ def on_intent(intent_request, session):
 		languageAbbreviation = returnLanguageAbbrFromFull(language)
 		#Defines the abbreviated version of the language sent in the request
 		accent = intent['slots']['accentVal']['value']
-		for value in listOfLanguages:
-			if accent == value["Full_Name"]:
-				accentAbbreviation = value["Abbreviation"].lower()
+		# defines the accent language
+		accentAbbreviation = returnLanguageAbbrFromFull(accent)
+		# returns accent abbreviation
 		if languageAbbreviation != "en":
 			text = translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
 		else:
