@@ -29,11 +29,14 @@ def on_intent(intent_request, session):
 	if intent_name == 'useAccent':
 		try:
 			language = intent['slots']['language']['value']
+			#Trys to find out if the language is defined
 		except:
 			language = "English"
+			#else defaults as English
 		for value in getListOfLanguages():
 			#value type = dict
 			if language == value["Full_Name"]:
+				#the
 				languageAbbreviation = value["Abbreviation"].lower()
 		accent = intent['slots']['accentVal']['value']
 		for value in listOfLanguages:
