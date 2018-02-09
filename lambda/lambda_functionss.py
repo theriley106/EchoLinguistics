@@ -10,8 +10,8 @@ except:
 	print("No security credentials set up")
 	print("create secretCode.txt, accessKey.txt, and bucketID.txt")
 # This just confirms that you have all configuration files
-LAMBDA_TEMP_DIR = "/tmp"
-# This is the only lambda folder you have r/w access to
+FFMPEG_FILE_LOCATION = "/tmp/ffmpeg.linux64"
+# /tmp/ is the only lambda folder you have r/w access to
 lambdas = botoClient("lambda", region_name='us-east-1')
 # This opens up a botoClient to interact with the ffmpeg lambda function
 SKILL_NAME = "Echo Linguistics"
