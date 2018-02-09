@@ -103,6 +103,7 @@ def genAccentSSML(intent):
 	# This is the python dict that the echo can interperet
 
 def returnLanguageSlotValue(intent, default="Spanish"):
+	# This tells the developer the slot values that the client said
 	try:
 		return intent['slots']['language']['value'].title()
 	except:
