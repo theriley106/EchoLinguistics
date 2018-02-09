@@ -13,6 +13,8 @@ TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here i
 # This is the text that the third party voice will say
 HELP_RESPONSE = "You can tell me to speak different languages or speak in different accents"
 # This is the response that is said when a user asks alexa for help using the skill
+END_RESPONSE = "Thank you for checking out Echo Linguistics"
+# This is the end request text that is sent when the client exits to skill
 SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
 # This is the url of the S3 Bucket - make sure this is a publicly available bucket.
 DB_FILE = '/tmp/mp3List.txt'
@@ -215,7 +217,7 @@ def handle_session_end_request():
 	"response": {
 	"outputSpeech": {
 	"type": "PlainText",
-	"text": "Thanks for checking out Rubiks Scrambler!"
+	"text": END_RESPONSE
 		},
 		"shouldEndSession": True
 	  }
