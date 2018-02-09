@@ -1,17 +1,29 @@
-from boto3 import client as botoClient
 import json
 import os
 from googletrans import Translator
+import os
+import re
+import shutil
+import sys
+import requests
+import random
+import json
+import tinys3
+import time
+
 try:
 	SECRET_KEY = open("secretCode.txt").read().strip()
 	ACCESS_KEY = open("accessKey.txt").read().strip()
-	BUCKET_ID = open("bucketID.txt").read().strip()
 except:
 	print("No security credentials set up")
-	print("create secretCode.txt, accessKey.txt, and bucketID.txt")
+	print("create secretCode.txt and accessKey.txt")
 # This just confirms that you have all configuration files
 FFMPEG_FILE_LOCATION = "/tmp/ffmpeg.linux64"
 # /tmp/ is the only lambda folder you have r/w access to
+shutil.copyfile('/var/task/ffmpeg.linux64', ffmpeg_bin)
+# This copies the files in /var/task/ffmpeg.linux64 on every lambda run
+os.chmod(ffmpeg_bin, os.stat(ffmpeg_bin).st_mode | stat.S_IEXEC)
+# This makes that ffmpeg file executable
 lambdas = botoClient("lambda", region_name='us-east-1')
 # This opens up a botoClient to interact with the ffmpeg lambda function
 SKILL_NAME = "Echo Linguistics"
@@ -33,9 +45,20 @@ DB_FILE = '/tmp/mp3List.txt'
 LOW_BANDWIDTH = True
 # This tells the skill whether or not to regrab duplicate files
 
+def uploadFile(fileName):
+	bucketID = extractBucketID(SSML_URL)
+	finalFileName = fileName.split('/')[-1]
+	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
+	conn.upload(finalFileName, open(fileName,'rb'), bucketID)
+	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(bucketID, fileName)
+
+def extractBucketID(ssmlValue):
+	return ssmlValue.partition(".com/")[2].partition("/")[0]
+
 def checkInFile(region):
 	# This checks to see if the region is in the file exists already
 	for val in open(DB_FILE).read().split("\n"):
+		# This checks to see if the line in the file matches the region
 		if region == val:
 			return True
 	return False
