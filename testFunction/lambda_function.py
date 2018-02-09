@@ -107,6 +107,7 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 	try:
 		return intent['slots']['language']['value'].title()
 	except:
+		# This means that the user didn't fill any language slots in their request
 		return default
 
 
