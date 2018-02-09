@@ -93,12 +93,8 @@ def on_intent(intent_request, session):
 
 	if intent_name == 'saySomething':
 		try:
-			abbr = intent['slots']['language']['value'].title()
-			listOfLanguages = json.load(open("supportedLanguages.json"))
-			for value in listOfLanguages:
-				if abbr == value["Full_Name"]:
-					region = value["Abbreviation"].lower()
-			print("Generating Quote for Region: {}".format(region))
+			languageName = intent['slots']['language']['value'].title()
+			region = returnLanguageAbbrFromFull(languageName)
 		except Exception as exp:
 			print exp
 			region = "es"
