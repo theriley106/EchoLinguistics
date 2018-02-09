@@ -66,7 +66,6 @@ def editMP3(mp3File):
 
 
 def lambda_handler(event, context):
-	print event
 	try:
 		region = event["Region"]
 	except:
