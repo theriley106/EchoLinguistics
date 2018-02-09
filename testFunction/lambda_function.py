@@ -9,7 +9,7 @@ DB_FILE = '/tmp/mp3List.txt'
 #This is the file where the previously generated file information is stored
 
 def checkInFile(region):
-	for val in open('/tmp/mp3List.txt').read().split("\n"):
+	for val in open(DB_FILE).read().split("\n"):
 		if region == val:
 			return True
 	return False
@@ -26,8 +26,8 @@ def getListOfLanguages(languageList='supportedLanguages.json'):
 	return json.load(open("supportedLanguages.json"))
 
 def createmp3List():
-	if os.path.exists("/tmp/mp3List.txt") == False:
-		os.system("touch /tmp/mp3List.txt")
+	if os.path.exists(DB_FILE) == False:
+		os.system("touch {}".format(DB_FILE))
 
 def returnLanguageAbbrFromFull(fullLanguage):
 	for value in getListOfLanguages():
@@ -109,7 +109,7 @@ def on_intent(intent_request, session):
 			#This checks to see if you have already created this file before
 			lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
 			# this invokes the lambda function that makes the quote
-			with open('/tmp/mp3List.txt', 'a') as file:
+			with open(DB_FILE, 'a') as file:
 				file.write('{}\n'.format(region))
 			#This saves it so that it knows to use this file in the future
 		return {
