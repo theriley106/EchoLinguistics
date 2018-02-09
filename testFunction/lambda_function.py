@@ -15,6 +15,8 @@ SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
 # This is the url of the S3 Bucket - make sure this is a publicly available bucket.
 DB_FILE = '/tmp/mp3List.txt'
 # This is the file where the previously generated file information is stored
+LOW_BANDWIDTH = True
+# This tells the skill whether or not to regrab duplicate files
 
 def checkInFile(region):
 	for val in open(DB_FILE).read().split("\n"):
