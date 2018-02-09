@@ -43,7 +43,9 @@ def getListOfLanguages(languageList='supportedLanguages.json'):
 def createmp3List():
 	# This "creates" mp3List if it doesn't exist already.
 	if os.path.exists(DB_FILE) == False:
+		# The file doesn't exist
 		os.system("touch {}".format(DB_FILE))
+		# Create the file
 
 def returnLanguageAbbrFromFull(fullLanguage):
 	for value in getListOfLanguages():
