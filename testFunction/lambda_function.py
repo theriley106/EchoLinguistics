@@ -76,12 +76,13 @@ def genAccentSSML(intent):
 	text = generateText(language, accent, languageAbbreviation)
 	# generate text that gets returned
 	print("tell me something in {} in a {} accent".format(language, accent))
-	print("Accent: {}".format(f))
 	#purely for debug reasons
 	lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
 	# This is the lambda function that generates the ssml object
 	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
 	# This is the python dict that the echo can interperet
+
+
 
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
