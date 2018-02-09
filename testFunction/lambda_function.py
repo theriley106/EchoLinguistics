@@ -114,18 +114,7 @@ def on_intent(intent_request, session):
 				#This saves it so that it knows to use this file in the future
 				file.write('{}\n'.format(region))
 				# You could probably use os.system("echo {} >> {}".format(region, DB_FILE)) here
-		return {
-		"version": "1.0",
-		"sessionAttributes": {},
-		"response": {
-			"outputSpeech":
-			{
-			      "type": "SSML",
-			      "ssml": "<speak><audio src='https://s3.amazonaws.com/nucilohackathonbucket/{}.mp3'/></speak>".format(region)
-	    			},
-					"shouldEndSession": True
-				  }
-		}
+		return returnSSMLResponse("{}.mp3".format(languageAbbreviation))
 
 	elif intent_name == 'aboutDev':
 		return alexaHelper.devInfo()
