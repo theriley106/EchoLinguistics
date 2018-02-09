@@ -114,6 +114,21 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 		# This means that the user didn't fill any language slots in their request
 		return default
 
+def genSaySomethingSSML(intent):
+	languageName = returnLanguageSlotValue(intent)
+	languageAbbreviation = returnLanguageAbbrFromFull(languageName)
+	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
+	text = generateText(languageName, languageName, languageAbbreviation)
+	#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
+	if checkInFile(region) == False:
+		#This checks to see if you have already created this file before
+		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
+		# this invokes the lambda function that makes the quote
+		with open(DB_FILE, 'a') as file:
+			#This saves it so that it knows to use this file in the future
+			file.write('{}\n'.format(region))
+			# You could probably use os.system("echo {} >> {}".format(region, DB_FILE)) here
+	return returnSSMLResponse("{}.mp3".format(languageAbbreviation))
 
 
 def on_intent(intent_request, session):
@@ -124,21 +139,8 @@ def on_intent(intent_request, session):
 		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
-		# This
-		languageName = returnLanguageSlotValue(intent)
-		languageAbbreviation = returnLanguageAbbrFromFull(languageName)
-		# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
-		text = generateText(languageName, languageName, languageAbbreviation)
-		#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
-		if checkInFile(region) == False:
-			#This checks to see if you have already created this file before
-			lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
-			# this invokes the lambda function that makes the quote
-			with open(DB_FILE, 'a') as file:
-				#This saves it so that it knows to use this file in the future
-				file.write('{}\n'.format(region))
-				# You could probably use os.system("echo {} >> {}".format(region, DB_FILE)) here
-		return returnSSMLResponse("{}.mp3".format(languageAbbreviation))
+		# This is the function that says something without modifying accent
+		return genSaySomethingSSML(intent)
 
 	elif intent_name == 'aboutDev':
 		# Alexa tell me about the developer
@@ -153,6 +155,7 @@ def on_intent(intent_request, session):
 		return alexaHelper.handle_session_end_request()
 
 def on_launch(launch_request, session):
+	# As soon as the application is loaded
 	return get_welcome_response()
 
 def get_welcome_response():
