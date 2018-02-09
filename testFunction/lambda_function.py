@@ -4,12 +4,16 @@ import os
 from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
 TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
+SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}.mp3"
 
 def checkInFile(region):
 	for val in open('/tmp/mp3List.txt').read().split("\n"):
 		if region == val:
 			return True
 	return False
+
+def genSSML(fileName):
+	return SSML_URL.format(fileName)
 
 def translateText(text, toLanguage, fromLanguage="en"):
 	translator = Translator()
@@ -41,6 +45,20 @@ def genPayload(text, accentAbbreviation):
 			  "Text": text,
 			  "Region": accentAbbreviation
 			})
+
+def returnSSMLResponse(ssmlFile, endSession=True):
+	return {
+		"version": "1.0",
+		"sessionAttributes": {},
+		"response": {
+			"outputSpeech":
+			{
+			      "type": "SSML",
+			      "ssml": "<speak><audio src='{}'/></speak>".format(SSML_URL.format(ssmlFile))
+	    			},
+					"shouldEndSession": True
+				  }
+		}
 
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
