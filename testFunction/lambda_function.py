@@ -3,6 +3,8 @@ import json
 import os
 from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
+SKILL_NAME = "Echo Linguistics"
+# This is also the card title
 GREETING_MESSAGE = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
 # This is the message alexa will say when starting the skill
 GREETING_MESSAGE2 = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
@@ -132,7 +134,7 @@ def on_launch(launch_request, session):
 
 def get_welcome_response():
 	session_attributes = {}
-	card_title = "Transit Tracker"
+	card_title = SKILL_NAME
 	speech_output = GREETING_MESSAGE
 	reprompt_text = GREETING_MESSAGE2
 	should_end_session = False
