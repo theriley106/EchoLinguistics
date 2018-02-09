@@ -85,21 +85,17 @@ def returnSSMLResponse(ssmlFile, endSession=True):
 		}
 
 def genAccentSSML(intent):
-	try:
-		language = intent['slots']['language']['value']
-		#Trys to find out if the language is defined
-	except:
-		language = "English"
-		#else defaults as English
-	languageAbbreviation = returnLanguageAbbrFromFull(language)
+	languageName = returnLanguageSlotValue(intent, default="English")
+	# Full name of the language sent in the request: ie, English, Spanish, etc.
+	languageAbbreviation = returnLanguageAbbrFromFull(languageName)
 	#Defines the abbreviated version of the language sent in the request
 	accent = intent['slots']['accentVal']['value']
 	# defines the accent language
 	accentAbbreviation = returnLanguageAbbrFromFull(accent)
 	# returns accent abbreviation
-	text = generateText(language, accent, languageAbbreviation)
+	text = generateText(languageName, accent, languageAbbreviation)
 	# generate text that gets returned
-	print("tell me something in {} in a {} accent".format(language, accent))
+	print("tell me something in {} in a {} accent".format(languageName, accent))
 	#purely for debug reasons
 	lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
 	# This is the lambda function that generates the ssml object
