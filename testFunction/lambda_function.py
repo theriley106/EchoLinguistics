@@ -116,6 +116,7 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 
 def genSaySomethingSSML(intent):
 	languageName = returnLanguageSlotValue(intent)
+	# Full name of the language sent in the request: ie, English, Spanish, etc.
 	languageAbbreviation = returnLanguageAbbrFromFull(languageName)
 	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
 	text = generateText(languageName, languageName, languageAbbreviation)
