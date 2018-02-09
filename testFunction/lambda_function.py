@@ -84,6 +84,7 @@ def on_intent(intent_request, session):
 		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
 		# This is the lambda function that generates the ssml object
 		return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
+		# This is the python dict that the echo can interperet
 
 	if intent_name == 'saySomething':
 		try:
