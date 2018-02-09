@@ -133,7 +133,10 @@ def genSaySomethingSSML(intent):
 
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
+	# This is all of the info regarding the intent'
 	intent_name = intent_request["intent"]["name"]
+	# This is specifically the name of the intent you created
+
 	if intent_name == 'useAccent':
 		# alexa say something in german with a spanish accent
 		return genAccentSSML(intent)
