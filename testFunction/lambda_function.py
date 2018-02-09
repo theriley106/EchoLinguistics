@@ -11,6 +11,8 @@ GREETING_MESSAGE2 = "Modifying Amazon Echo Speech using speech synthesis markup 
 # This is the message alexa will say after leaving the skill open for ~10 seconds
 TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
 # This is the text that the third party voice will say
+HELP_RESPONSE = "You can tell me to speak different languages or speak in different accents"
+# This is the response that is said when a user asks alexa for help using the skill
 SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
 # This is the url of the S3 Bucket - make sure this is a publicly available bucket.
 DB_FILE = '/tmp/mp3List.txt'
@@ -120,6 +122,7 @@ def on_intent(intent_request, session):
 		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
+		# This
 		languageName = returnLanguageSlotValue(intent)
 		languageAbbreviation = returnLanguageAbbrFromFull(languageName)
 		# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
@@ -163,7 +166,7 @@ def lambda_handler(event, context):
 		handle_session_end_request()
 
 def get_help_response():
-	output = "Please ask me to generate a scramble.  You can also ask about the Developer of this application.  What can I help you with?"
+	output = HELP_RESPONSE
 	return returnSpeech(output, False)
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
