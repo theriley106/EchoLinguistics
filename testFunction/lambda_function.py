@@ -19,6 +19,7 @@ LOW_BANDWIDTH = True
 # This tells the skill whether or not to regrab duplicate files
 
 def checkInFile(region):
+	# This checks to see if the region is in the file exists already
 	for val in open(DB_FILE).read().split("\n"):
 		if region == val:
 			return True
