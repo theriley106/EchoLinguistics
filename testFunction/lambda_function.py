@@ -29,14 +29,17 @@ def genSSML(fileName):
 	return SSML_URL.format(fileName)
 
 def translateText(text, toLanguage, fromLanguage="en"):
+	# This translates text into the language described in fromLanguage
 	translator = Translator()
 	translation = translator.translate(text, dest=toLanguage)
 	return translation.text
 
 def getListOfLanguages(languageList='supportedLanguages.json'):
+	# This contains all supported languages
 	return json.load(open("supportedLanguages.json"))
 
 def createmp3List():
+	# This "creates" mp3List if it doesn't exist already.
 	if os.path.exists(DB_FILE) == False:
 		os.system("touch {}".format(DB_FILE))
 
@@ -49,8 +52,10 @@ def returnLanguageAbbrFromFull(fullLanguage):
 
 def generateText(language, accent, languageAbbreviation):
 	if languageAbbreviation != "en":
+		# This simply means the text needs to be translated
 			return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
 	else:
+		# This means it is going from en to en so no translation is required
 		return TEXT_TO_SAY.format(language, accent)
 
 def genPayload(text, accentAbbreviation):
