@@ -84,7 +84,7 @@ def genAccentSSML(intent):
 
 def returnLanguageSlotValue(intent, default="Spanish"):
 	try:
-		return intent['slots']['language']['value']
+		return intent['slots']['language']['value'].title()
 	except:
 		return default
 
@@ -97,13 +97,9 @@ def on_intent(intent_request, session):
 		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
-		try:
-			languageName = intent['slots']['language']['value'].title()
-			region = returnLanguageAbbrFromFull(languageName)
-			# this should be a lower case abbreviation: ie. es or en
-		except Exception as exp:
-			print exp
-			region = "es"
+		languageName = returnLanguageSlotValue(intent)
+		region = returnLanguageAbbrFromFull(languageName)
+		# this should be a lower case abbreviation: ie. es or en
 		if checkInFile(region) == False:
 			f = {
 				  "Text": translateText("I was successfully able to modify the Amazon Alexa voice.  Here it is speaking in {}".format(abbr), toLanguage=region),
