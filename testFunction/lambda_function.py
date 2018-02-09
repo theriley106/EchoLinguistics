@@ -101,7 +101,7 @@ def on_intent(intent_request, session):
 		languageName = returnLanguageSlotValue(intent)
 		languageAbbreviation = returnLanguageAbbrFromFull(languageName)
 		# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
-		text = translateText(TEXT_TO_SAY.format(languageName, languageName), toLanguage=languageAbbreviation)
+		text = generateText(languageName, languageName, languageAbbreviation)
 		#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
 		if checkInFile(region) == False:
 			f = {
