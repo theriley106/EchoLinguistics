@@ -89,6 +89,7 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 		return default
 
 
+
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
 	intent_name = intent_request["intent"]["name"]
@@ -98,11 +99,13 @@ def on_intent(intent_request, session):
 
 	if intent_name == 'saySomething':
 		languageName = returnLanguageSlotValue(intent)
-		region = returnLanguageAbbrFromFull(languageName)
+		languageAbbreviation = returnLanguageAbbrFromFull(languageName)
 		# this should be a lower case abbreviation: ie. es or en
+		text = translateText(TEXT_TO_SAY.format(languageName, languageName), toLanguage=languageAbbreviation)
+		#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
 		if checkInFile(region) == False:
 			f = {
-				  "Text": translateText("I was successfully able to modify the Amazon Alexa voice.  Here it is speaking in {}".format(abbr), toLanguage=region),
+				  "Text": ,
 				  "Region": region
 				}
 			print("Say Something: {}".format(f))
