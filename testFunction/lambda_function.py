@@ -56,7 +56,7 @@ def returnSSMLResponse(ssmlFile, endSession=True):
 			      "type": "SSML",
 			      "ssml": "<speak><audio src='{}'/></speak>".format(SSML_URL.format(ssmlFile))
 	    			},
-					"shouldEndSession": True
+					"shouldEndSession": endSession
 				  }
 		}
 
