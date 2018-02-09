@@ -104,6 +104,7 @@ def genSSML(fileName):
 def translateText(text, toLanguage, fromLanguage="en"):
 	# This translates text into the language described in fromLanguage
 	translator = Translator()
+	# Initiates translator class
 	translation = translator.translate(text, dest=toLanguage)
 	return translation.text
 
