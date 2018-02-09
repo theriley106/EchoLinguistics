@@ -95,6 +95,7 @@ def on_intent(intent_request, session):
 		try:
 			languageName = intent['slots']['language']['value'].title()
 			region = returnLanguageAbbrFromFull(languageName)
+			# this should be a lower case abbreviation: ie. es or en
 		except Exception as exp:
 			print exp
 			region = "es"
