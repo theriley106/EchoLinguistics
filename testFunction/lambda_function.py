@@ -133,8 +133,8 @@ def on_launch(launch_request, session):
 def get_welcome_response():
 	session_attributes = {}
 	card_title = "Transit Tracker"
-	speech_output = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
-	reprompt_text = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
+	speech_output = GREETING_MESSAGE
+	reprompt_text = GREETING_MESSAGE2
 	should_end_session = False
 	return build_response(session_attributes, build_speechlet_response(
 		card_title, speech_output, reprompt_text, should_end_session))
