@@ -82,11 +82,11 @@ def genAccentSSML(intent):
 	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
 	# This is the python dict that the echo can interperet
 
-def returnLanguageSlotLen(intent):
+def returnLanguageSlotValue(intent, default="es"):
 	try:
-		return len(intent['slots']['language']['value'].keys())
+		return intent['slots']['language']['value']
 	except:
-		return 0
+		return default
 
 
 def on_intent(intent_request, session):
