@@ -3,6 +3,10 @@ import json
 import os
 from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
+GREETING_MESSAGE = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
+# This is the message alexa will say when starting the skill
+GREETING_MESSAGE2 = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
+# This is the message alexa will say after leaving the skill open for ~10 seconds
 TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
 SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
 # This is the url of the S3 Bucket - make sure this is a publicly available bucket.
