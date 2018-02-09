@@ -45,6 +45,8 @@ DB_FILE = '/tmp/mp3List.txt'
 # This is the file where the previously generated file information is stored
 LOW_BANDWIDTH = True
 # This tells the skill whether or not to regrab duplicate files
+LANGUAGE_LIST = json.loads(open("supportedLanguages.json").read())
+# This contains all supported languages
 
 def uploadFile(fileName):
 	bucketID = extractBucketID(SSML_URL)
@@ -69,6 +71,17 @@ def checkInFile(region):
 		if region == val:
 			return True
 	return False
+
+def generateSSML(text, region=None):
+	if region == None:
+		region = random.choice(LANGUAGE_LIST)['Abbreviation']
+	url = generateURL(text, region.lower())
+	mp3File = saveMP3(url, region)
+	editMP3(mp3File)
+	fileName = uploadFile(mp3File)
+	os.system('rm {}'.format(mp3File))
+	print("Successfully downloaded")
+	return fileName
 
 def saveMP3(mp3URL, region):
 	#return MP3 file name
