@@ -66,6 +66,7 @@ def genPayload(text, accentAbbreviation):
 			})
 
 def returnSSMLResponse(ssmlFile, endSession=True):
+	# This is the full *completed* response that's sent to the client
 	return {
 		"version": "1.0",
 		"sessionAttributes": {},
