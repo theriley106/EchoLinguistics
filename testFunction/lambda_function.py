@@ -112,6 +112,7 @@ def on_intent(intent_request, session):
 			# this invokes the lambda function that makes the quote
 			with open(DB_FILE, 'a') as file:
 				file.write('{}\n'.format(region))
+				# You could probably use os.system("echo {} >> {}".format(region, DB_FILE)) here
 			#This saves it so that it knows to use this file in the future
 		return {
 		"version": "1.0",
