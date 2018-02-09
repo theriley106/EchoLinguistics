@@ -135,12 +135,14 @@ def on_intent(intent_request, session):
 	intent = intent_request["intent"]
 	intent_name = intent_request["intent"]["name"]
 	if intent_name == 'useAccent':
+		# alexa say something in german with a spanish accent
 		return genAccentSSML(intent)
 		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
-		# This is the function that says something without modifying accent
+		# alexa say something in german
 		return genSaySomethingSSML(intent)
+		# This is the function that says something without modifying accent
 
 	elif intent_name == 'aboutDev':
 		# Alexa tell me about the developer
