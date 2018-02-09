@@ -70,6 +70,15 @@ def checkInFile(region):
 			return True
 	return False
 
+def saveMP3(mp3URL, region):
+	#return MP3 file name
+	mp3File = '/tmp/{}.mp3'.format(region)
+	#calls it a random file name to later delete
+	with open(mp3File, 'wb') as f:
+		#this saves the response locally as an actual mp3 file
+		f.write(requests.get(mp3URL).content)
+	return mp3File
+
 def generateURL(keyWords, region):
 	# This generates the GOOGLE TRANSLATE URL
 	keyWords = keyWords.replace(" ", "%20")
