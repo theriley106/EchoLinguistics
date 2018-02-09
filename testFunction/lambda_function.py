@@ -3,6 +3,7 @@ import json
 import os
 from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
+# This opens up a botoClient to interact with the ffmpeg lambda function
 SKILL_NAME = "Echo Linguistics"
 # This is also the card title
 GREETING_MESSAGE = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
