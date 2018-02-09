@@ -106,6 +106,7 @@ def translateText(text, toLanguage, fromLanguage="en"):
 	translator = Translator()
 	# Initiates translator class
 	translation = translator.translate(text, dest=toLanguage)
+	# .to_dict or .text work with this object
 	return translation.text
 
 def getListOfLanguages(languageList='supportedLanguages.json'):
