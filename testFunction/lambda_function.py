@@ -104,15 +104,12 @@ def on_intent(intent_request, session):
 		text = generateText(languageName, languageName, languageAbbreviation)
 		#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
 		if checkInFile(region) == False:
-			f = {
-				  "Text": ,
-				  "Region": region
-				}
-			print("Say Something: {}".format(f))
-			lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=json.dumps(f))
+			#This checks to see if you have already created this file before
+			lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
 			# this invokes the lambda function that makes the quote
 			with open('/tmp/mp3List.txt', 'a') as file:
 				file.write('{}\n'.format(region))
+			#This saves it so that it knows to use this file in the future
 		return {
 		"version": "1.0",
 		"sessionAttributes": {},
