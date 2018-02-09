@@ -17,6 +17,7 @@ try:
 except:
 	print("No security credentials set up")
 	print("create secretCode.txt and accessKey.txt")
+
 # This just confirms that you have all configuration files
 FFMPEG_FILE_LOCATION = "/tmp/ffmpeg.linux64"
 # /tmp/ is the only lambda folder you have r/w access to
@@ -53,6 +54,7 @@ def uploadFile(fileName):
 	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(bucketID, fileName)
 
 def extractBucketID(ssmlValue):
+	# This just converts the ssml value into a bucket ID for uploadFile
 	return ssmlValue.partition(".com/")[2].partition("/")[0]
 
 def checkInFile(region):
