@@ -60,31 +60,35 @@ def returnSSMLResponse(ssmlFile, endSession=True):
 				  }
 		}
 
+def genAccentSSML(intent):
+	try:
+		language = intent['slots']['language']['value']
+		#Trys to find out if the language is defined
+	except:
+		language = "English"
+		#else defaults as English
+	languageAbbreviation = returnLanguageAbbrFromFull(language)
+	#Defines the abbreviated version of the language sent in the request
+	accent = intent['slots']['accentVal']['value']
+	# defines the accent language
+	accentAbbreviation = returnLanguageAbbrFromFull(accent)
+	# returns accent abbreviation
+	text = generateText(language, accent, languageAbbreviation)
+	# generate text that gets returned
+	print("tell me something in {} in a {} accent".format(language, accent))
+	print("Accent: {}".format(f))
+	#purely for debug reasons
+	lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
+	# This is the lambda function that generates the ssml object
+	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
+	# This is the python dict that the echo can interperet
+
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
 	intent_name = intent_request["intent"]["name"]
 	if intent_name == 'useAccent':
-		try:
-			language = intent['slots']['language']['value']
-			#Trys to find out if the language is defined
-		except:
-			language = "English"
-			#else defaults as English
-		languageAbbreviation = returnLanguageAbbrFromFull(language)
-		#Defines the abbreviated version of the language sent in the request
-		accent = intent['slots']['accentVal']['value']
-		# defines the accent language
-		accentAbbreviation = returnLanguageAbbrFromFull(accent)
-		# returns accent abbreviation
-		text = generateText(language, accent, languageAbbreviation)
-		# generate text that gets returned
-		print("tell me something in {} in a {} accent".format(language, accent))
-		print("Accent: {}".format(f))
-		#purely for debug reasons
-		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
-		# This is the lambda function that generates the ssml object
-		return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
-		# This is the python dict that the echo can interperet
+		return genAccentSSML(intent)
+		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
 		try:
