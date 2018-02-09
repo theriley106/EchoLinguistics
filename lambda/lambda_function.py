@@ -5,7 +5,6 @@ import stat
 import datetime
 import sys
 import requests
-import awsIntegration
 import random
 import json
 import tinys3
@@ -46,7 +45,7 @@ def generateSSML(text, region=None):
 	print url
 	mp3File = saveMP3(url, region)
 	editMP3(mp3File)
-	fileName = awsIntegration.uploadFile(mp3File)
+	fileName = uploadFile(mp3File)
 	os.system('rm {}'.format(mp3File))
 	print("Successfully downloaded")
 	return fileName
