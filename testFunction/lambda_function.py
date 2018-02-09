@@ -4,7 +4,7 @@ import os
 from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
 TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
-SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}.mp3"
+SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
 
 def checkInFile(region):
 	for val in open('/tmp/mp3List.txt').read().split("\n"):
@@ -83,18 +83,8 @@ def on_intent(intent_request, session):
 		#purely for debug reasons
 		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
 		# This is the lambda function that generates the ssml object
-		return {
-		"version": "1.0",
-		"sessionAttributes": {},
-		"response": {
-			"outputSpeech":
-			{
-			      "type": "SSML",
-			      "ssml": "<speak><audio src='https://s3.amazonaws.com/nucilohackathonbucket/{}.mp3'/></speak>".format(accentAbbreviation)
-	    			},
-					"shouldEndSession": True
-				  }
-		}
+		return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
+
 	if intent_name == 'saySomething':
 		try:
 			abbr = intent['slots']['language']['value'].title()
