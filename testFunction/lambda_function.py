@@ -141,10 +141,15 @@ def on_intent(intent_request, session):
 		return returnSSMLResponse("{}.mp3".format(languageAbbreviation))
 
 	elif intent_name == 'aboutDev':
+		# Alexa tell me about the developer
 		return alexaHelper.devInfo()
+
 	elif intent_name == "AMAZON.HelpIntent":
+		# Alexa help
 		return alexaHelper.get_help_response(REPEATSPEECH)
+
 	elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
+		# Alexa stop / Alexa cancel
 		return alexaHelper.handle_session_end_request()
 
 def on_launch(launch_request, session):
