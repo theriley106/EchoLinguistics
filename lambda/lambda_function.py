@@ -8,7 +8,16 @@ import requests
 import awsIntegration
 import random
 import json
+import tinys3
+import time
 
+try:
+	SECRET_KEY = open("secretCode.txt").read().strip()
+	ACCESS_KEY = open("accessKey.txt").read().strip()
+	BUCKET_ID = open("bucketID.txt").read().strip()
+except:
+	print("No security credentials set up")
+	print("create secretCode.txt, accessKey.txt, and bucketID.txt")
 
 lambda_tmp_dir = '/tmp'
 ffmpeg_bin = "{0}/ffmpeg.linux64".format(lambda_tmp_dir)
@@ -16,6 +25,14 @@ shutil.copyfile('/var/task/ffmpeg.linux64', ffmpeg_bin)
 os.chmod(ffmpeg_bin, os.stat(ffmpeg_bin).st_mode | stat.S_IEXEC)
 
 languageList = json.loads(open("supportedLanguages.json").read())
+
+def uploadFile(fileName):
+	start = time.time()
+	finalFileName = fileName.split('/')[-1]
+	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
+	conn.upload(finalFileName, open(fileName,'rb'), BUCKET_ID)
+	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(BUCKET_ID, fileName)
+
 def generateURL(keyWords, region):
 	print keyWords
 	print region
