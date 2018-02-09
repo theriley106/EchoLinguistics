@@ -5,6 +5,8 @@ from googletrans import Translator
 lambdas = botoClient("lambda", region_name='us-east-1')
 TEXT_TO_SAY = "I was successfully able to modify the Amazon Alexa voice.  Here it is speaking {0} in a {1} accent"
 SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
+DB_FILE = '/tmp/mp3List.txt'
+#This is the file where the previously generated file information is stored
 
 def checkInFile(region):
 	for val in open('/tmp/mp3List.txt').read().split("\n"):
