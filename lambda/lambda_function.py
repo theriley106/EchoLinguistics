@@ -10,6 +10,7 @@ import random
 import json
 import tinys3
 import time
+import os.stat
 
 try:
 	SECRET_KEY = open("secretCode.txt").read().strip()
