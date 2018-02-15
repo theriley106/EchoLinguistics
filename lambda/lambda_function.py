@@ -21,9 +21,9 @@ except:
 # This just confirms that you have all configuration files
 FFMPEG_FILE_LOCATION = "/tmp/ffmpeg.linux64"
 # /tmp/ is the only lambda folder you have r/w access to
-shutil.copyfile('/var/task/ffmpeg.linux64', ffmpeg_bin)
+shutil.copyfile('/var/task/ffmpeg.linux64', FFMPEG_FILE_LOCATION)
 # This copies the files in /var/task/ffmpeg.linux64 on every lambda run
-os.chmod(ffmpeg_bin, os.stat(ffmpeg_bin).st_mode | stat.S_IEXEC)
+os.chmod(FFMPEG_FILE_LOCATION, os.stat(FFMPEG_FILE_LOCATION).st_mode | stat.S_IEXEC)
 # This makes that ffmpeg file executable
 lambdas = botoClient("lambda", region_name='us-east-1')
 # This opens up a botoClient to interact with the ffmpeg lambda function
@@ -57,7 +57,7 @@ def uploadFile(fileName):
 
 def editMP3(mp3File):
 	# Makes the generated mp3File work on the Echo
-	os.system("{} -i {} -ac 2 -codec:a libmp3lame -b:a 48k -ar 16000 -y -vol 1026 /tmp/tmp.mp3 && mv /tmp/tmp.mp3 {}".format(ffmpeg_bin, mp3File, mp3File))
+	os.system("{} -i {} -ac 2 -codec:a libmp3lame -b:a 48k -ar 16000 -y -vol 1026 /tmp/tmp.mp3 && mv /tmp/tmp.mp3 {}".format(FFMPEG_FILE_LOCATION, mp3File, mp3File))
 	#this is the regular FFMPEG command to convert it to a playable audio file.  Notice the tmp and mv tmp.mp3, because -i will overwrite the file as you go along.
 
 def extractBucketID(ssmlValue):
