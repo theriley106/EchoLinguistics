@@ -10,7 +10,8 @@ import random
 import json
 import tinys3
 import time
-import os.stat
+import stat
+#import botoClient
 
 try:
 	SECRET_KEY = open("secretCode.txt").read().strip()
@@ -26,7 +27,7 @@ shutil.copyfile('/var/task/ffmpeg.linux64', FFMPEG_FILE_LOCATION)
 # This copies the files in /var/task/ffmpeg.linux64 on every lambda run
 os.chmod(FFMPEG_FILE_LOCATION, os.stat(FFMPEG_FILE_LOCATION).st_mode | stat.S_IEXEC)
 # This makes that ffmpeg file executable
-lambdas = botoClient("lambda", region_name='us-east-1')
+#lambdas = botoClient("lambda", region_name='us-east-1')
 # This opens up a botoClient to interact with the ffmpeg lambda function
 SKILL_NAME = "Echo Linguistics"
 # This is also the card title
@@ -171,7 +172,8 @@ def genAccentSSML(intent):
 	# generate text that gets returned
 	print("tell me something in {} in a {} accent".format(languageName, accentVal))
 	#purely for debug reasons
-	lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
+	generateSSML(text, accentAbbreviation)
+	#lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
 	# This is the lambda function that generates the ssml object
 	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
 	# This is the python dict that the echo can interperet
@@ -193,7 +195,8 @@ def genSaySomethingSSML(intent):
 	#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
 	if checkInFile(region) == False:
 		#This checks to see if you have already created this file before
-		lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
+		generateSSML(text, accentAbbreviation)
+		#lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
 		# this invokes the lambda function that makes the quote
 		with open(DB_FILE, 'a') as file:
 			#This saves it so that it knows to use this file in the future
