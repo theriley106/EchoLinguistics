@@ -27,8 +27,6 @@ shutil.copyfile('/var/task/ffmpeg.linux64', FFMPEG_FILE_LOCATION)
 # This copies the files in /var/task/ffmpeg.linux64 on every lambda run
 os.chmod(FFMPEG_FILE_LOCATION, os.stat(FFMPEG_FILE_LOCATION).st_mode | stat.S_IEXEC)
 # This makes that ffmpeg file executable
-#lambdas = botoClient("lambda", region_name='us-east-1')
-# This opens up a botoClient to interact with the ffmpeg lambda function
 SKILL_NAME = "Echo Linguistics"
 # This is also the card title
 GREETING_MESSAGE = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
@@ -173,8 +171,7 @@ def genAccentSSML(intent):
 	print("tell me something in {} in a {} accent".format(languageName, accentVal))
 	#purely for debug reasons
 	generateSSML(text, accentAbbreviation)
-	#lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, accentAbbreviation))
-	# This is the lambda function that generates the ssml object
+	# This is the function that generates the ssml audio object
 	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
 	# This is the python dict that the echo can interperet
 
@@ -196,8 +193,7 @@ def genSaySomethingSSML(intent):
 	if checkInFile(region) == False:
 		#This checks to see if you have already created this file before
 		generateSSML(text, accentAbbreviation)
-		#lambdas.invoke(FunctionName="ffmpegLambda", InvocationType="RequestResponse", Payload=genPayload(text, languageAbbreviation))
-		# this invokes the lambda function that makes the quote
+		# this invokes the function that makes the quote
 		with open(DB_FILE, 'a') as file:
 			#This saves it so that it knows to use this file in the future
 			file.write('{}\n'.format(region))
