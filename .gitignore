@@ -102,4 +102,7 @@ ENV/
 secretCode.txt
 accessKey.txt
 bucketID.txt
+sampleSkill/lambda/secretCode.txt
+sampleSkill/lambda/accessKey.txt
+sampleSkill/lambda/bucketID.txt
 *.pyc
