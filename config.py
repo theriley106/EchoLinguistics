@@ -25,7 +25,10 @@ def uploadFile(fileName):
 
 
 if raw_input("Successfully grabbed configuration keys.  Test now? (y/n) ").lower() == 'y':
-	import tinys3
+	try:
+		import tinys3
+	except:
+		raise Exception("You need to run pip install -r requirements.txt")
 	os.system("echo 'Echo Linguistics Test Upload' > testUpload.txt")
 	fileUpload = uploadFile('testUpload.txt')
 	print("Successfully uploaded file to {}".format(fileUpload))
