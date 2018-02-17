@@ -1,7 +1,7 @@
 import os
 
 continueVal = True
-if os.path.exists("accessKey.txt") == True or os.path.exists("secretKey.txt") == True:
+if os.path.exists("sampleSkill/lambda/accessKey.txt") == True or os.path.exists("sampleSkill/lambda/secretKey.txt") == True:
 	if raw_input("Files already exist.  Overwrite now? (y/n) ").lower() == 'n':
 		continueVal = False
 		accessKey = open("accessKey.txt").read().strip()
@@ -14,15 +14,15 @@ if continueVal == True:
 	bucketID = raw_input("S3 Bucket ID: ")
 	if bucketID[-1] != '/':
 		bucketID = bucketID + '/'
-	file = open("accessKey.txt", "w")
+	file = open("sampleSkill/lambda/accessKey.txt", "w")
 	file.write(accessKey)
 	file.close()
 
-	file = open("secretKey.txt", "w")
+	file = open("sampleSkill/lambda/secretKey.txt", "w")
 	file.write(secretKey)
 	file.close()
 
-	file = open("bucketID.txt", "w")
+	file = open("sampleSkill/lambda/bucketID.txt", "w")
 	file.write(bucketID)
 	file.close()
 
@@ -43,9 +43,6 @@ if raw_input("Successfully grabbed configuration keys.  Test now? (y/n) ").lower
 	fileUpload = uploadFile('testUpload.txt')
 	print("Successfully uploaded file to {}".format(fileUpload))
 	os.remove("testUpload.txt")
-
-
-
 
 
 
