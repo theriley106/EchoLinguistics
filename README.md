@@ -21,8 +21,9 @@ Amazon describes SSML as the following:
 
 With SSML, developers can tell Alexa to enunciate words a certain way (Tomato vs. Tomoto).  SSML can also be used to play audio files on the echo, but it differs from regular audio streaming because it can’t be paused in the same way that a song can.
 
-In other words, this framework works by dynamically generating MP3 files that are served to the echo using SSML.  The Echo Linguistic framework generates SSML compatible MP3 files that contain a third party voice saying an inputted text.  Translation is also supported, which opens up the ability for the Echo to speak in 69 additional languages:
+In other words, this framework works by dynamically generating MP3 files that are served to the echo using SSML.  The Echo Linguistic framework generates SSML compatible MP3 files that contain a third party voice saying an inputted text.  Translation is also supported, which opens up the ability for the Echo to speak in 69 additional languages.
 
+### Supported Languages
 
 - German
 - Albanian
