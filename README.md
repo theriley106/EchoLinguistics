@@ -23,9 +23,31 @@ With SSML, developers can tell Alexa to enunciate words a certain way (Tomato vs
 
 In other words, this framework works by dynamically generating MP3 files that are served to the echo using SSML.  The Echo Linguistic framework generates SSML compatible MP3 files that contain a third party voice saying an inputted text.  Translation is also supported, which opens up the ability for the Echo to speak in 69 additional languages.
 
+### Requirements
+
+- A PUBLIC Amazon S3 Bucket
+
+- AWS Access keys with the following permissions:
+
+`
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*"
+        }
+    ]
+}
+`
+
+
 ### How do I use Echo Linguistics?
 
+After cloning the repository run the following commands:
 
+` $
 
 ### Supported Languages
 
