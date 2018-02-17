@@ -19,6 +19,7 @@ try:
 except:
 	print("No security credentials set up")
 	print("create secretCode.txt and accessKey.txt")
+	raise Exception("No config files")
 
 # This just confirms that you have all configuration files
 FFMPEG_FILE_LOCATION = "/tmp/ffmpeg.linux64"
