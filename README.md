@@ -45,9 +45,28 @@ In other words, this framework works by dynamically generating MP3 files that ar
 
 ### How do I use Echo Linguistics?
 
-After cloning the repository run the following commands:
+After cloning the repository and fulfilling all requirements run the following commands:
 
-` $
+` $ pip install -r requirements.txt `
+
+` $ python config.py `
+
+The program will then ask you for configuration details.  After the prompt has finished and verified the credentials with a test upload, the lambda function is ready to be deployed.
+
+The easiest way to deploy the Lambda function is to compress all of the files located in sampleSkill/lambda/ into a ZIP file, and "Upload as ZIP" in AWS Lambda.
+
+After the Lambda function has been successfully deployed, the sample skill function will need to be uploaded to the alexa skill creator.
+
+You can either use ASK CLI or manually create a skill and post the contents of sampleSkill/models/en-US.json into the "Code Editor" section of the Alexa Skills Kit web app.
+
+
+After saving/building the skill, you should now have a functioning Alexa skill that can utilize third party voices on the amazon echo.
+
+To test the skill, say:
+
+"Open Echo Linguistics"
+
+"Tell me something in {language}"
 
 ### Supported Languages
 
