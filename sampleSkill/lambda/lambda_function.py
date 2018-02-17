@@ -16,6 +16,7 @@ import stat
 try:
 	SECRET_KEY = open("secretCode.txt").read().strip()
 	ACCESS_KEY = open("accessKey.txt").read().strip()
+	tempBucketID = open("bucketID.txt").read().strip()
 except:
 	print("No security credentials set up")
 	print("create secretCode.txt and accessKey.txt")
@@ -40,7 +41,7 @@ HELP_RESPONSE = "You can tell me to speak different languages or speak in differ
 # This is the response that is said when a user asks alexa for help using the skill
 END_RESPONSE = "Thank you for checking out Echo Linguistics"
 # This is the end request text that is sent when the client exits to skill
-SSML_URL = "https://s3.amazonaws.com/nucilohackathonbucket/{0}"
+SSML_URL = tempBucketID + "{0}"
 # This is the url of the S3 Bucket - make sure this is a publicly available bucket.
 DB_FILE = '/tmp/mp3List.txt'
 # This is the file where the previously generated file information is stored
