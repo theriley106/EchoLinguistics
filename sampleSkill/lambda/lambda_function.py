@@ -14,7 +14,7 @@ import stat
 #import botoClient
 
 try:
-	SECRET_KEY = open("secretCode.txt").read().strip()
+	SECRET_KEY = open("secretKey.txt").read().strip()
 	ACCESS_KEY = open("accessKey.txt").read().strip()
 	tempBucketID = open("bucketID.txt").read().strip()
 except:

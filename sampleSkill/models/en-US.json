@@ -1,386 +1,421 @@
 {
-  "interactionModel": {
-    "languageModel": {
-      "invocationName": "linguistic modifier",
-      "intents": [
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": []
-        },
-        {
-          "name": "saySomething",
-          "slots": [
-            {
-              "name": "language",
-              "type": "languages"
-            }
-          ],
-          "samples": [
-            "say something in {language}",
-            "say something",
-            "tell me something",
-            "give an example in {language}",
-            "tell me a story in {language}",
-            "tell me a story"
-          ]
-        },
-        {
-          "name": "useAccent",
-          "slots": [
-            {
-              "name": "language",
-              "type": "languages"
-            },
-            {
-              "name": "accentVal",
-              "type": "languages",
-              "samples": [
-                "use a {accentVal} accent",
-                "{accentVal}"
+  "languageModel": {
+    "types": [
+      {
+        "name": "languages",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "German",
+              "synonyms": [
+                "de"
               ]
             }
-          ],
-          "samples": [
-            "tell me something in a {accentVal} accent",
-            "tell me something in {language} in a {accentVal} accent",
-            "say something in a {accentVal} accent",
-            "say something in {language} in a {accentVal} accent",
-            "say a sentence in {language} with a {accentVal} accent"
-          ]
-        }
-      ],
-      "types": [
-        {
-          "values": [
-            {
-              "name": {
-                "value": "German",
-                "synonyms": [
-                  "de"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Albanian",
-                "synonyms": [
-                  "sq"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Armenian",
-                "synonyms": [
-                  "hy"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Bosnian",
-                "synonyms": [
-                  "bs"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Czech",
-                "synonyms": [
-                  "cs"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Danish",
-                "synonyms": [
-                  "da"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Dutch",
-                "synonyms": [
-                  "nl"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "English",
-                "synonyms": [
-                  "en"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Esperanto",
-                "synonyms": [
-                  "eo"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Estonian",
-                "synonyms": [
-                  "et"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "French",
-                "synonyms": [
-                  "fr"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Greek",
-                "synonyms": [
-                  "el"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Icelandic",
-                "synonyms": [
-                  "is"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Japanese",
-                "synonyms": [
-                  "ja"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Javanese",
-                "synonyms": [
-                  "jw"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Khmer",
-                "synonyms": [
-                  "km"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Korean",
-                "synonyms": [
-                  "ko"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Latvian",
-                "synonyms": [
-                  "lv"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Macedonian",
-                "synonyms": [
-                  "mk"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Nepali",
-                "synonyms": [
-                  "ne"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Norwegian",
-                "synonyms": [
-                  "no"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Polish",
-                "synonyms": [
-                  "pl"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Portuguese",
-                "synonyms": [
-                  "pt"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Russian",
-                "synonyms": [
-                  "ru"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Serbian",
-                "synonyms": [
-                  "sr"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Slovak",
-                "synonyms": [
-                  "sk"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Spanish",
-                "synonyms": [
-                  "es"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Sundanese",
-                "synonyms": [
-                  "su"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Swahili",
-                "synonyms": [
-                  "sw"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Swedish",
-                "synonyms": [
-                  "sv"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Turkish",
-                "synonyms": [
-                  "tr"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Ukrainian",
-                "synonyms": [
-                  "uk"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Vietnamese",
-                "synonyms": [
-                  "vi"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Welsh",
-                "synonyms": [
-                  "cy"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "Afrikaans",
-                "synonyms": [
-                  "af"
-                ]
-              }
-            }
-          ],
-          "name": "languages"
-        }
-      ]
-    },
-    "dialog": {
-      "intents": [
-        {
-          "name": "useAccent",
-          "confirmationRequired": false,
-          "slots": [
-            {
-              "name": "language",
-              "type": "languages",
-              "elicitationRequired": false,
-              "confirmationRequired": false
-            },
-            {
-              "name": "accentVal",
-              "type": "languages",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Intent-useAccent.IntentSlot-accentVal"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    "prompts": [
-      {
-        "id": "Elicit.Intent-useAccent.IntentSlot-accentVal",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "What accent do you want me to use?"
           },
           {
-            "type": "PlainText",
-            "value": "What accent?"
+            "id": null,
+            "name": {
+              "value": "Albanian",
+              "synonyms": [
+                "sq"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Armenian",
+              "synonyms": [
+                "hy"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Bosnian",
+              "synonyms": [
+                "bs"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Czech",
+              "synonyms": [
+                "cs"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Danish",
+              "synonyms": [
+                "da"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Dutch",
+              "synonyms": [
+                "nl"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "English",
+              "synonyms": [
+                "en"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Esperanto",
+              "synonyms": [
+                "eo"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Estonian",
+              "synonyms": [
+                "et"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "French",
+              "synonyms": [
+                "fr"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Greek",
+              "synonyms": [
+                "el"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Icelandic",
+              "synonyms": [
+                "is"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Japanese",
+              "synonyms": [
+                "ja"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Javanese",
+              "synonyms": [
+                "jw"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Khmer",
+              "synonyms": [
+                "km"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Korean",
+              "synonyms": [
+                "ko"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Latvian",
+              "synonyms": [
+                "lv"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Macedonian",
+              "synonyms": [
+                "mk"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Nepali",
+              "synonyms": [
+                "ne"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Norwegian",
+              "synonyms": [
+                "no"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Polish",
+              "synonyms": [
+                "pl"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Portuguese",
+              "synonyms": [
+                "pt"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Russian",
+              "synonyms": [
+                "ru"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Serbian",
+              "synonyms": [
+                "sr"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Slovak",
+              "synonyms": [
+                "sk"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Spanish",
+              "synonyms": [
+                "es"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Sundanese",
+              "synonyms": [
+                "su"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Swahili",
+              "synonyms": [
+                "sw"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Swedish",
+              "synonyms": [
+                "sv"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Turkish",
+              "synonyms": [
+                "tr"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Ukrainian",
+              "synonyms": [
+                "uk"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Vietnamese",
+              "synonyms": [
+                "vi"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Welsh",
+              "synonyms": [
+                "cy"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Afrikaans",
+              "synonyms": [
+                "af"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "saySomething",
+        "samples": [
+          "say something in {language}",
+          "say something",
+          "tell me something",
+          "give an example in {language}",
+          "tell me a story in {language}",
+          "tell me a story"
+        ],
+        "slots": [
+          {
+            "name": "language",
+            "type": "languages"
+          }
+        ]
+      },
+      {
+        "name": "useAccent",
+        "samples": [
+          "tell me something in a {accentVal} accent",
+          "tell me something in {language} in a {accentVal} accent",
+          "say something in a {accentVal} accent",
+          "say something in {language} in a {accentVal} accent",
+          "say a sentence in {language} with a {accentVal} accent"
+        ],
+        "slots": [
+          {
+            "name": "language",
+            "type": "languages"
+          },
+          {
+            "name": "accentVal",
+            "type": "languages",
+            "samples": [
+              "use a {accentVal} accent",
+              "{accentVal}"
+            ]
+          }
+        ]
+      }
+    ],
+    "invocationName": "linguistic modifier"
+  },
+  "prompts": [
+    {
+      "id": "Elicit.Intent-useAccent.IntentSlot-accentVal",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What accent do you want me to use?"
+        },
+        {
+          "type": "PlainText",
+          "value": "What accent?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "useAccent",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "language",
+            "type": "languages",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          },
+          {
+            "name": "accentVal",
+            "type": "languages",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-useAccent.IntentSlot-accentVal"
+            }
           }
         ]
       }
