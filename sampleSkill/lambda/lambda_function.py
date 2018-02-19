@@ -1,3 +1,5 @@
+import echoLinguistics
+
 SKILL_NAME = "Echo Linguistics"
 # This is also the card title
 GREETING_MESSAGE = "Modifying Amazon Echo Speech using speech synthesis markup language by Christopher Lambert"
