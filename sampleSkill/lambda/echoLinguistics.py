@@ -149,6 +149,7 @@ def translateText(text, toLanguage, fromLanguage="en"):
 	translation = translator.translate(text, dest=toLanguage)
 	# .to_dict or .text work with this object
 	return translation.text
+
 def getListOfLanguages(languageList='supportedLanguages.json'):
 	# This contains all supported languages
 	return json.load(open("supportedLanguages.json"))
@@ -176,5 +177,7 @@ def generateText(language, accent, languageAbbreviation):
 		return TEXT_TO_SAY.format(language, accent)
 
 def speak(text, accent=None, fromLanguage=None, toLanguage=None, translate=False):
+	if translate == True:
+
 	if accent != None:
 		pass
