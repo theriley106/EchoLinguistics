@@ -1,4 +1,3 @@
-import json
 import os
 from googletrans import Translator
 import os
@@ -6,9 +5,7 @@ import re
 import shutil
 import requests
 import random
-import json
 import tinys3
-import stat
 
 
 SKILL_NAME = "Echo Linguistics"
