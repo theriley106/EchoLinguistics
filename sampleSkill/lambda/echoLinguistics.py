@@ -8,6 +8,8 @@ import random
 # This is used for picking a random language when it's not specified
 import stat
 # This is used to make ffmpeg executable
+import requests
+# This is used to grab/save the mp3 file from google
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
 	ACCESS_KEY = open("accessKey.txt").read().strip()
