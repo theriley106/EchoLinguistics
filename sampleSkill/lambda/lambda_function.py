@@ -4,7 +4,6 @@ from googletrans import Translator
 import os
 import re
 import shutil
-import sys
 import requests
 import random
 import json
