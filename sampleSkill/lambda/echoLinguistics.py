@@ -63,7 +63,6 @@ def returnSSMLResponse(ssmlFile, endSession=True):
 				  }
 		}
 
-
 def genAccentSSML(intent):
 	languageName = returnLanguageSlotValue(intent, default="English")
 	# Full name of the language sent in the request: ie, English, Spanish, etc.
@@ -175,3 +174,7 @@ def generateText(language, accent, languageAbbreviation):
 	else:
 		# This means it is going from en to en so no translation is required
 		return TEXT_TO_SAY.format(language, accent)
+
+def speak(text, accent=None, fromLanguage=None, toLanguage=None, translate=False):
+	if accent != None:
+		pass

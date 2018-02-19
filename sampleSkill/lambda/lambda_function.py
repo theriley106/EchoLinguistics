@@ -13,8 +13,6 @@ HELP_RESPONSE = "You can tell me to speak different languages or speak in differ
 END_RESPONSE = "Thank you for checking out Echo Linguistics"
 # This is the end request text that is sent when the client exits to skill
 
-
-
 def returnLanguageSlotValue(intent, default="Spanish"):
 	# This tells the developer the slot values that the client said
 	try:
