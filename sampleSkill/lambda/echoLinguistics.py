@@ -67,3 +67,23 @@ def checkInFile(region):
 		if region == val:
 			return True
 	return False
+
+def generateSSML(text, region=None):
+	if region == None:
+		region = random.choice(LANGUAGE_LIST)['Abbreviation']
+	url = generateURL(text, region.lower())
+	mp3File = saveMP3(url, region)
+	editMP3(mp3File)
+	fileName = uploadFile(mp3File)
+	os.system('rm {}'.format(mp3File))
+	print("Successfully downloaded")
+	return fileName
+
+def saveMP3(mp3URL, region):
+	#return MP3 file name
+	mp3File = '/tmp/{}.mp3'.format(region)
+	#calls it a random file name to later delete
+	with open(mp3File, 'wb') as f:
+		#this saves the response locally as an actual mp3 file
+		f.write(requests.get(mp3URL).content)
+	return mp3File
