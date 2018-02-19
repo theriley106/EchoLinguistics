@@ -8,7 +8,6 @@ import requests
 import random
 import json
 import tinys3
-import time
 import stat
 
 
