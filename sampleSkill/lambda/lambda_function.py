@@ -13,21 +13,6 @@ HELP_RESPONSE = "You can tell me to speak different languages or speak in differ
 END_RESPONSE = "Thank you for checking out Echo Linguistics"
 # This is the end request text that is sent when the client exits to skill
 
-def returnSSMLResponse(ssmlFile, endSession=True):
-	# This is the full *completed* response that's sent to the client
-	return {
-		"version": "1.0",
-		"sessionAttributes": {},
-		"response": {
-			"outputSpeech":
-			{
-			      "type": "SSML",
-			      "ssml": "<speak><audio src='{}'/></speak>".format(SSML_URL.format(ssmlFile))
-	    			},
-					"shouldEndSession": endSession
-				  }
-		}
-
 
 
 def returnLanguageSlotValue(intent, default="Spanish"):

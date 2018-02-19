@@ -40,13 +40,29 @@ LOW_BANDWIDTH = True
 LANGUAGE_LIST = json.loads(open("supportedLanguages.json").read())
 # This contains all supported languages
 
-######### This runs anytime echoLinguistics is imported  #######################
+######### This runs anytime echoLinguistics.py is imported  #######################
 
 createmp3List()
 # This creates the list of mp3 files that have already been generated
 
 
-########### Function declarations  ###########################3
+########### Function declarations  ###########################
+
+def returnSSMLResponse(ssmlFile, endSession=True):
+	# This is the full *completed* response that's sent to the client
+	return {
+		"version": "1.0",
+		"sessionAttributes": {},
+		"response": {
+			"outputSpeech":
+			{
+			      "type": "SSML",
+			      "ssml": "<speak><audio src='{}'/></speak>".format(SSML_URL.format(ssmlFile))
+	    			},
+					"shouldEndSession": endSession
+				  }
+		}
+
 
 def genAccentSSML(intent):
 	languageName = returnLanguageSlotValue(intent, default="English")
