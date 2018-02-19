@@ -173,13 +173,13 @@ def generateText(language, accent):
 	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
 	if languageAbbreviation != "en":
 		# This simply means the text needs to be translated
-			return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
+		return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
 	else:
 		# This means it is going from en to en so no translation is required
 		return TEXT_TO_SAY.format(language, accent)
 
-def speak(text, accent=None, fromLanguage=None, toLanguage=None, translate=False):
+def speak(text, accent=None, fromLanguage="en", toLanguage=None, translate=False):
 	if translate == True:
-
+		text = translateText(text, toLanguage, fromLanguage)
 	if accent != None:
 		pass
