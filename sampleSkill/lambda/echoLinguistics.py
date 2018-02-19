@@ -59,3 +59,11 @@ def editMP3(mp3File):
 def extractBucketID(ssmlValue):
 	# This just converts the ssml value into a bucket ID for uploadFile
 	return ssmlValue.partition(".com/")[2].partition("/")[0]
+
+def checkInFile(region):
+	# This checks to see if the region is in the file exists already
+	for val in open(DB_FILE).read().split("\n"):
+		# This checks to see if the line in the file matches the region
+		if region == val:
+			return True
+	return False
