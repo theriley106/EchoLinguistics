@@ -10,10 +10,14 @@ import stat
 # This is used to make ffmpeg executable
 import requests
 # This is used to grab/save the mp3 file from google
+
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
+	# This is the AWS Secret key for interacting with the S3 bucket
 	ACCESS_KEY = open("accessKey.txt").read().strip()
+	# This is the AWS Access key for interacting with the S3 bucket
 	tempBucketID = open("bucketID.txt").read().strip()
+	# This is the "Temp" bucketID that is eventually used to create SSML_URL
 except:
 	print("No security credentials set up")
 	print("create secretCode.txt and accessKey.txt")
