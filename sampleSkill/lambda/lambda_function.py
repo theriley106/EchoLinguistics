@@ -1,5 +1,4 @@
 from googletrans import Translator
-import re
 import requests
 import random
 import tinys3
