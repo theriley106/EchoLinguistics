@@ -43,3 +43,19 @@ def genAccentSSML(intent):
 	# This is the function that generates the ssml audio object
 	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
 	# This is the python dict that the echo can interperet
+
+def uploadFile(fileName):
+	bucketID = extractBucketID(SSML_URL)
+	finalFileName = fileName.split('/')[-1]
+	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
+	conn.upload(finalFileName, open(fileName,'rb'), bucketID)
+	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(bucketID, fileName)
+
+def editMP3(mp3File):
+	# Makes the generated mp3File work on the Echo
+	os.system("{} -i {} -ac 2 -codec:a libmp3lame -b:a 48k -ar 16000 -y -vol 1026 /tmp/tmp.mp3 && mv /tmp/tmp.mp3 {}".format(FFMPEG_FILE_LOCATION, mp3File, mp3File))
+	#this is the regular FFMPEG command to convert it to a playable audio file.  Notice the tmp and mv tmp.mp3, because -i will overwrite the file as you go along.
+
+def extractBucketID(ssmlValue):
+	# This just converts the ssml value into a bucket ID for uploadFile
+	return ssmlValue.partition(".com/")[2].partition("/")[0]
