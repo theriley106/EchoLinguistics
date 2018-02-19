@@ -1,5 +1,5 @@
 from googletrans import Translator
-
+import json
 
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
