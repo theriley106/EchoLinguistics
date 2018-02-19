@@ -146,7 +146,7 @@ def translateText(text, toLanguage, fromLanguage="en"):
 	# This translates text into the language described in fromLanguage
 	translator = Translator()
 	# Initiates translator class
-	translation = translator.translate(text, dest=toLanguage)
+	translation = translator.translate(text, dest=toLanguage, src=fromLanguage)
 	# .to_dict or .text work with this object
 	return translation.text
 
