@@ -184,7 +184,7 @@ def generateText(language, accent):
 		# This means it is going from en to en so no translation is required
 		return TEXT_TO_SAY.format(language, accent)
 
-def speak(text, accent=None, fromLanguage="en", toLanguage="en"):
+def speak(text, accent="en", fromLanguage="en", toLanguage="en"):
 	if toLanguage != "en":
 		# This means you want to translate the text
 		text = translateText(text, toLanguage, fromLanguage)
