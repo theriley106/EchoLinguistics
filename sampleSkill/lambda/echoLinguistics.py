@@ -151,10 +151,3 @@ def generateText(language, accent, languageAbbreviation):
 	else:
 		# This means it is going from en to en so no translation is required
 		return TEXT_TO_SAY.format(language, accent)
-
-def genPayload(text, accentAbbreviation):
-	# This is the payload that is sent to the lambda function
-	return json.dumps({
-			  "Text": text,
-			  "Region": accentAbbreviation
-			})
