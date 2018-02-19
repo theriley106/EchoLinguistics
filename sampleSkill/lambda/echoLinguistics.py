@@ -104,3 +104,35 @@ def translateText(text, toLanguage, fromLanguage="en"):
 	translation = translator.translate(text, dest=toLanguage)
 	# .to_dict or .text work with this object
 	return translation.text
+def getListOfLanguages(languageList='supportedLanguages.json'):
+	# This contains all supported languages
+	return json.load(open("supportedLanguages.json"))
+
+def createmp3List():
+	# This "creates" mp3List if it doesn't exist already.
+	if os.path.exists(DB_FILE) == False:
+		# The file doesn't exist
+		os.system("touch {}".format(DB_FILE))
+		# Create the file
+
+def returnLanguageAbbrFromFull(fullLanguage):
+	for value in getListOfLanguages():
+		#value type = dict
+		if fullLanguage == value["Full_Name"]:
+			#the language that the user
+			return value["Abbreviation"].lower()
+
+def generateText(language, accent, languageAbbreviation):
+	if languageAbbreviation != "en":
+		# This simply means the text needs to be translated
+			return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
+	else:
+		# This means it is going from en to en so no translation is required
+		return TEXT_TO_SAY.format(language, accent)
+
+def genPayload(text, accentAbbreviation):
+	# This is the payload that is sent to the lambda function
+	return json.dumps({
+			  "Text": text,
+			  "Region": accentAbbreviation
+			})
