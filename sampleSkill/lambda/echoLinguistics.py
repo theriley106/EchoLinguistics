@@ -64,6 +64,8 @@ def uploadFile(fileName):
 	finalFileName = fileName.split('/')[-1]
 	# Converts the input from /whateverinput/ to whateverinput
 	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
+	# This open up the s3 conneciton using the constants defined at the beginning
+	# TODO - Ideally this would be a class that would take these vars on input and test...
 	conn.upload(finalFileName, open(fileName,'rb'), bucketID)
 	# This uploads that
 	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(bucketID, fileName)
