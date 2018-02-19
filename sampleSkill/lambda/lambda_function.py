@@ -192,13 +192,13 @@ def genSaySomethingSSML(intent):
 	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
 	text = generateText(languageName, languageName, languageAbbreviation)
 	#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
-	if checkInFile(region) == False:
+	if checkInFile(languageAbbreviation) == False:
 		#This checks to see if you have already created this file before
-		generateSSML(text, accentAbbreviation)
+		generateSSML(text, languageAbbreviation)
 		# this invokes the function that makes the quote
 		with open(DB_FILE, 'a') as file:
 			#This saves it so that it knows to use this file in the future
-			file.write('{}\n'.format(region))
+			file.write('{}\n'.format(languageAbbreviation))
 			# You could probably use os.system("echo {} >> {}".format(region, DB_FILE)) here
 	return returnSSMLResponse("{}.mp3".format(languageAbbreviation))
 
