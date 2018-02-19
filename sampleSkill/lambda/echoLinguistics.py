@@ -117,12 +117,18 @@ def generateSSML(text, region=None):
 		region = random.choice(LANGUAGE_LIST)['Abbreviation']
 		# Just picks a random region from the language list
 	url = generateURL(text, region.lower())
+	# Returns in the format of https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=...
 	mp3File = saveMP3(url, region)
+	# This grabs the mp3 file using requests | the region is the file name...
 	editMP3(mp3File)
-	fileName = uploadFile(mp3File)
+	# This doesn't return anything.  TO DO: Maybe a better way of doing this(?)
+	rawSSML = uploadFile(mp3File)
+	# This is raw SSML.  Ie: <speak><audio src='...
 	os.system('rm {}'.format(mp3File))
+	# Removes the mp3 File from the lambda function
 	print("Successfully downloaded")
-	return fileName
+	# TODO: Maybe add a verbose == True(?)
+	return rawSSML
 
 def saveMP3(mp3URL, region):
 	#return MP3 file name
@@ -180,6 +186,7 @@ def generateText(language, accent):
 
 def speak(text, accent=None, fromLanguage="en", toLanguage="en"):
 	if toLanguage != "en":
+		# This means you want to translate the text
 		text = translateText(text, toLanguage, fromLanguage)
 		# Input: text | Output: text
 	if accent != None:
