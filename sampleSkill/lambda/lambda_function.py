@@ -1,8 +1,5 @@
-import os
 from googletrans import Translator
-import os
 import re
-import shutil
 import requests
 import random
 import tinys3
