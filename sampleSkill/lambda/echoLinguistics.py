@@ -62,9 +62,12 @@ def uploadFile(fileName):
 	bucketID = extractBucketID(SSML_URL)
 	# This converts the bucketID from "https://s3.amazonaws.com/bucketid/" to "bucketid"
 	finalFileName = fileName.split('/')[-1]
+	# Converts the input from /whateverinput/ to whateverinput
 	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
 	conn.upload(finalFileName, open(fileName,'rb'), bucketID)
+	# This uploads that
 	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(bucketID, fileName)
+	# This is the format the echo can use
 
 def editMP3(mp3File):
 	# Makes the generated mp3File work on the Echo
