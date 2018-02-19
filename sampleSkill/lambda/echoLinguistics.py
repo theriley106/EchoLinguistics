@@ -168,7 +168,9 @@ def returnLanguageAbbrFromFull(fullLanguage):
 			#the language that the user
 			return value["Abbreviation"].lower()
 
-def generateText(language, accent, languageAbbreviation):
+def generateText(language, accent):
+	languageAbbreviation = returnLanguageAbbrFromFull(language)
+	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
 	if languageAbbreviation != "en":
 		# This simply means the text needs to be translated
 			return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)

@@ -22,10 +22,9 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 		return default
 
 def genSaySomethingSSML(intent):
-	languageName = returnLanguageSlotValue(intent)
-	# Full name of the language sent in the request: ie, English, Spanish, etc.
-	languageAbbreviation = returnLanguageAbbrFromFull(languageName)
-	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
+
+
+
 	text = generateText(languageName, languageName, languageAbbreviation)
 	#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
 	if checkInFile(languageAbbreviation) == False:
@@ -51,7 +50,9 @@ def on_intent(intent_request, session):
 		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
-		# alexa say something in german
+		# example: alexa say something in german
+		languageName = returnLanguageSlotValue(intent)
+		# Full name of the language sent in the request: ie, English, Spanish, etc.
 		return genSaySomethingSSML(intent)
 		# This is the function that says something without modifying accent
 
