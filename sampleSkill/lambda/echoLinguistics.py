@@ -23,8 +23,8 @@ except:
 	print("create secretCode.txt and accessKey.txt")
 	raise Exception("No config files")
 	# Please follow instructions in readme if you keep getting this error
+# ^ This just confirms that you have all configuration files
 
-# This just confirms that you have all configuration files
 FFMPEG_FILE_LOCATION = "/tmp/ffmpeg.linux64"
 # /tmp/ is the only lambda folder you have r/w access to
 shutil.copyfile('/var/task/ffmpeg.linux64', FFMPEG_FILE_LOCATION)
