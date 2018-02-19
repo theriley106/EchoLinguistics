@@ -40,10 +40,13 @@ LOW_BANDWIDTH = True
 LANGUAGE_LIST = json.loads(open("supportedLanguages.json").read())
 # This contains all supported languages
 
-######### This runs anytime echoLinguistics is imported  #######################3
+######### This runs anytime echoLinguistics is imported  #######################
 
 createmp3List()
 # This creates the list of mp3 files that have already been generated
+
+
+########### Function declarations  ###########################3
 
 def genAccentSSML(intent):
 	languageName = returnLanguageSlotValue(intent, default="English")
