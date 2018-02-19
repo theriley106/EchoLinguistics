@@ -1,4 +1,5 @@
 from googletrans import Translator
+# This is used for tranlating the text
 import json
 # This is primarily used for using the supported language list
 import shutil
