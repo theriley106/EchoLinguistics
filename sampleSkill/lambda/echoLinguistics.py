@@ -90,7 +90,9 @@ def checkInFile(region):
 
 def generateSSML(text, region=None):
 	if region == None:
+		# This means the user didn't define the region in the utterance
 		region = random.choice(LANGUAGE_LIST)['Abbreviation']
+		# Just picks a random region from the language list
 	url = generateURL(text, region.lower())
 	mp3File = saveMP3(url, region)
 	editMP3(mp3File)
