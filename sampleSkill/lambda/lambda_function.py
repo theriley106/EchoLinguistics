@@ -149,6 +149,5 @@ def handle_session_end_request():
 	  }
 	}
 
-createmp3List()
 if __name__ == '__main__':
 	on_intent({'intent': {'slots': {'language': {'value': 'Spanish'}}, 'name': 'saySomething'}, 'name': ''}, "")
