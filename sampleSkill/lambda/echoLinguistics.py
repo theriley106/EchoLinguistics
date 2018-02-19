@@ -60,6 +60,7 @@ def genAccentSSML(intent):
 
 def uploadFile(fileName):
 	bucketID = extractBucketID(SSML_URL)
+	# This converts the bucketID from "https://s3.amazonaws.com/bucketid/" to "bucketid"
 	finalFileName = fileName.split('/')[-1]
 	conn = tinys3.Connection(ACCESS_KEY,SECRET_KEY,tls=True)
 	conn.upload(finalFileName, open(fileName,'rb'), bucketID)
