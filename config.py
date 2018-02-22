@@ -1,4 +1,5 @@
 import os
+import shutil
 
 continueVal = True
 if os.path.exists("sampleSkill/lambda/accessKey.txt") == True or os.path.exists("sampleSkill/lambda/secretKey.txt") == True:
@@ -43,7 +44,7 @@ if raw_input("Successfully grabbed configuration keys.  Test now? (y/n) ").lower
 	print("Successfully uploaded file to {}".format(fileUpload))
 	os.remove("testUpload.txt")
 
-
+shutil.copyfile('EchoLinguistics.py', 'sampleSkill/lambda/EchoLinguistics.py')
 
 
 #if raw_input("You need to create a ")
