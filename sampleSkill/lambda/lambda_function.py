@@ -1,4 +1,5 @@
 import echoLinguistics
+import alexaHelper
 
 SKILL_NAME = "Echo Linguistics"
 # This is also the card title
