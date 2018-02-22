@@ -191,5 +191,9 @@ def speak(text, accent=None, fromLanguage="en", toLanguage="en"):
 		# Input: text | Output: text
 	if accent == None:
 		accent = toLanguage
+	generateSSML(text, accent)
+	# This is the function that generates the ssml audio object
+	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
+	# This is the python dict that the echo can interperet
 
 
