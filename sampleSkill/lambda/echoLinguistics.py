@@ -16,6 +16,13 @@ import tinys3
 # This is for uploading files to s3
 import re
 # This is for grabbing the mp3 names from the val character
+
+'''
+Format of DB
+I was successfully able to modify the Amazon Alexa voice.  Here it is speaking german in a spanish accent | ge_es_11.mp3
+I was successfully able to modify the Amazon Alexa voice.  Here it is speaking korean in a spanish accent | ko_es_12.mp3
+'''
+
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
 	# This is the AWS Secret key for interacting with the S3 bucket
@@ -49,6 +56,19 @@ FILENAME_FORMAT = "{0}_{1}_{2}.mp3"
 
 
 ########### Function declarations  ###########################
+
+def findHighestIndex():
+	# This returns the highest file number saved in the DB
+	try:
+		fileName = re.findall("\S+\.mp3", str(open(DB_FILE).read()))[-1]
+		# Regex all mp3 files in that string of text
+		indexNum = re.findall('\d+', fileName)[0]
+		# Returns all digits, and picks the first one which is the index number
+	except Exception as exp:
+		print exp
+		indexNum = 0
+		# Defaults to 0 if the file was just created
+	return int(indexNum)
 
 def returnSSMLResponse(ssmlFile, endSession=True):
 	# This is the full *completed* response that's sent to the client
@@ -102,7 +122,7 @@ def findIndex(string, accent, toLanguage):
 		# This checks to see if the line in the file matches the region
 		if '|' in str(val):
 			if string == str(val).partition("|")[0].strip():
-				fileName = re.findall("\S+\.mp3", str(val))
+				fileName = re.findall("\S+\.mp3", str(val))[0]
 				if fileName.split('_')[0] == toLanguage and fileName.split("_")[1] == accent:
 					return fileName
 
@@ -189,6 +209,8 @@ def speak(text, accent=None, fromLanguage="en", toLanguage="en", fileName=None):
 	if fileName == None:
 		generateSSML(text, accent)
 		# This is the function that generates the ssml audio object
+		if LOW_BANDWIDTH == True:
+
 		return returnSSMLResponse("{}.mp3".format(accent))
 		# This is the python dict that the echo can interperet
 	else:
