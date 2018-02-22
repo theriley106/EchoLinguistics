@@ -139,8 +139,3 @@ To test the skill, say:
 - Ukrainian
 - Vietnamese
 - Welsh
-
-
-### To-Do
-
-- Create a better low bandwidth mode
