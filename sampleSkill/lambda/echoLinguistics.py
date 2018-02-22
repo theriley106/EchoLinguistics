@@ -57,23 +57,6 @@ FILENAME_FORMAT = "{0}_{1}_{2}.mp3"
 
 ########### Function declarations  ###########################
 
-def findHighestIndex():
-	# This returns the highest file number saved in the DB
-	try:
-		fileName = re.findall("\S+\.mp3", str(open(DB_FILE).read()))[-1]
-		# Regex all mp3 files in that string of text
-		indexNum = re.findall('\d+', fileName)[0]
-		# Returns all digits, and picks the first one which is the index number
-	except Exception as exp:
-		indexNum = 0
-		# Defaults to 0 if the file was just created
-	return int(indexNum)
-
-def writeToDB(text, language, accent):
-	indexNum = findHighestIndex() + 1
-	# This generates the index number the text will use
-	os.system('echo "{} | {}_{}_{}.mp3" >> {}'.format(text, language, accent, indexNum, DB_FILE))
-
 def returnSSMLResponse(ssmlFile, endSession=True):
 	# This is the full *completed* response that's sent to the client
 	return {
@@ -89,7 +72,6 @@ def returnSSMLResponse(ssmlFile, endSession=True):
 				  }
 		}
 
-
 def uploadFile(fileName):
 	bucketID = extractBucketID(SSML_URL)
 	# This converts the bucketID from "https://s3.amazonaws.com/bucketid/" to "bucketid"
@@ -102,6 +84,24 @@ def uploadFile(fileName):
 	# This uploads that
 	return "<speak><audio src='https://s3.amazonaws.com/{}/{}'/></speak>".format(bucketID, fileName)
 	# This is the format the echo can use
+
+def findHighestIndex():
+	# This returns the highest file number saved in the DB
+	try:
+		fileName = re.findall("\S+\.mp3", str(open(DB_FILE).read()))[-1]
+		# Regex all mp3 files in that string of text
+		indexNum = re.findall('\d+', fileName)[0]
+		# Returns all digits, and picks the first one which is the index number
+	except Exception as exp:
+		indexNum = 0
+		# Defaults to 0 if the file was just created
+	return int(indexNum)
+
+def writeToDB(text, language, accent):
+	# Writes the filename to the database defined in DB_FILE
+	indexNum = findHighestIndex() + 1
+	# This generates the index number the text will use
+	os.system('echo "{} | {}_{}_{}.mp3" >> {}'.format(text, language, accent, indexNum, DB_FILE))
 
 def editMP3(mp3File):
 	# Makes the generated mp3File work on the Echo
@@ -193,16 +193,6 @@ def returnLanguageAbbrFromFull(fullLanguage):
 		if fullLanguage == value["Full_Name"]:
 			#the language that the user
 			return value["Abbreviation"].lower()
-
-def generateText(text, language, accent):
-	languageAbbreviation = returnLanguageAbbrFromFull(language)
-	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
-	if languageAbbreviation != "en":
-		# This simply means the text needs to be translated
-		return translateText(text.format(language, accent), languageAbbreviation)
-	else:
-		# This means it is going from en to en so no translation is required
-		return text.format(language, accent)
 
 def speak(text, accent=None, fromLanguage="en", toLanguage="en", fileName=None):
 	if toLanguage != "en":

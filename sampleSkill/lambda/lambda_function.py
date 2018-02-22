@@ -21,20 +21,6 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 		# This means that the user didn't fill any language slots in their request
 		return default
 
-def genSaySomethingSSML(intent):
-	text = generateText(languageName, languageName, languageAbbreviation)
-	#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
-	if checkInFile(languageAbbreviation) == False:
-		#This checks to see if you have already created this file before
-		generateSSML(text, languageAbbreviation)
-		# this invokes the function that makes the quote
-		with open(DB_FILE, 'a') as file:
-			#This saves it so that it knows to use this file in the future
-			file.write('{}\n'.format(languageAbbreviation))
-			# You could probably use os.system("echo {} >> {}".format(region, DB_FILE)) here
-	return returnSSMLResponse("{}.mp3".format(languageAbbreviation))
-
-
 def on_intent(intent_request, session):
 	intent = intent_request["intent"]
 	# This is all of the info regarding the intent'
@@ -140,5 +126,3 @@ def handle_session_end_request():
 	  }
 	}
 
-if __name__ == '__main__':
-	on_intent({'intent': {'slots': {'language': {'value': 'Spanish'}}, 'name': 'saySomething'}, 'name': ''}, "")
