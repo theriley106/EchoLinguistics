@@ -12,6 +12,8 @@ import requests
 # This is used to grab/save the mp3 file from google
 import os
 # This is for granting ffmpeg executable permissions
+import tinys3
+# This is for uploading files to s3
 
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
