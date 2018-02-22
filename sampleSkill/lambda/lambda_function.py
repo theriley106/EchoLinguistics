@@ -52,7 +52,7 @@ def on_intent(intent_request, session):
 
 	if intent_name == 'saySomething':
 		# example: alexa say something in german
-		languageName = echoLinguistics.returnLanguageSlotValue(intent)
+		languageName = returnLanguageSlotValue(intent)
 		# Full name of the language sent in the request: ie, English, Spanish, etc.
 		languageAbbr = echoLinguistics.returnLanguageAbbrFromFull(languageName)
 		# This is the abbreviation of language name: ie, English to en
