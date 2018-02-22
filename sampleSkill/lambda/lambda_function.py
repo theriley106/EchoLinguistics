@@ -56,7 +56,7 @@ def on_intent(intent_request, session):
 		# Full name of the language sent in the request: ie, English, Spanish, etc.
 		languageAbbr = echoLinguistics.returnLanguageAbbrFromFull(languageName)
 		# This is the abbreviation of language name: ie, English to en
-		return echoLinguistics.speak(text, accent=languageAbbr, toLanguage=languageAbbr)
+		return echoLinguistics.speak(TEXT_TO_SAY.format(languageName, languageName), accent=languageAbbr, toLanguage=languageAbbr)
 		# This is the function that says something without modifying accent
 
 	elif intent_name == 'aboutDev':
