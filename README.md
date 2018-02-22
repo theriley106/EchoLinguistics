@@ -61,7 +61,7 @@ After saving/building the skill, you should now have a functioning Alexa skill t
 
 To test the skill, say:
 
-"Open Echo Linguistics"
+"Open Linguistic Modifier"
 
 "Tell me something in {language}"
 
