@@ -19,7 +19,7 @@ import re
 
 '''
 Format of DB
-I was successfully able to modify the Amazon Alexa voice.  Here it is speaking german in a spanish accent | ge_es_11.mp3
+I was successfully able to modify the Amazon Alexa voice.  Here it is speaking german in a spanish accent | de_es_11.mp3
 I was successfully able to modify the Amazon Alexa voice.  Here it is speaking korean in a spanish accent | ko_es_12.mp3
 '''
 
@@ -65,10 +65,14 @@ def findHighestIndex():
 		indexNum = re.findall('\d+', fileName)[0]
 		# Returns all digits, and picks the first one which is the index number
 	except Exception as exp:
-		print exp
 		indexNum = 0
 		# Defaults to 0 if the file was just created
 	return int(indexNum)
+
+def writeToDB(text, language, accent):
+	indexNum = findHighestIndex() + 1
+	# This generates the index number the text will use
+	os.system('echo "{} | {}_{}_{}.mp3" >> {}'.format(text, language, accent, indexNum, DB_FILE))
 
 def returnSSMLResponse(ssmlFile, endSession=True):
 	# This is the full *completed* response that's sent to the client
@@ -126,14 +130,14 @@ def findIndex(string, accent, toLanguage):
 				if fileName.split('_')[0] == toLanguage and fileName.split("_")[1] == accent:
 					return fileName
 
-def generateSSML(text, region=None):
+def generateSSML(text, fileName, region=None):
 	if region == None:
 		# This means the user didn't define the region in the utterance
 		region = random.choice(LANGUAGE_LIST)['Abbreviation']
 		# Just picks a random region from the language list
 	url = generateURL(text, region.lower())
 	# Returns in the format of https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=...
-	mp3File = saveMP3(url, region)
+	mp3File = saveMP3(url, fileName)
 	# This grabs the mp3 file using requests | the region is the file name...
 	editMP3(mp3File)
 	# This doesn't return anything.  TO DO: Maybe a better way of doing this(?)
@@ -145,9 +149,13 @@ def generateSSML(text, region=None):
 	# TODO: Maybe add a verbose == True(?)
 	return rawSSML
 
-def saveMP3(mp3URL, region):
+def genFileName(text, accent, language):
+	indexNum = findHighestIndex() + 1
+	return '{}_{}_{}.mp3'.format(language, accent, indexNum)
+
+def saveMP3(mp3URL, fileName):
 	#return MP3 file name
-	mp3File = '/tmp/{}.mp3'.format(region)
+	mp3File = '/tmp/{}'.format(fileName)
 	#calls it a random file name to later delete
 	with open(mp3File, 'wb') as f:
 		#this saves the response locally as an actual mp3 file
@@ -207,17 +215,18 @@ def speak(text, accent=None, fromLanguage="en", toLanguage="en", fileName=None):
 		if checkInFile(text) == True:
 			fileName = findIndex(text, accent, toLanguage)
 	if fileName == None:
-		generateSSML(text, accent)
+		# If the file name doesn't exist it will make it
+		fileName = genFileName(text, accent, toLanguage)
+		# This generates the filename of the speach file.  ie "en_es_111.mp3"
+		generateSSML(text, fileName, accent)
 		# This is the function that generates the ssml audio object
 		if LOW_BANDWIDTH == True:
-
-		return returnSSMLResponse("{}.mp3".format(accent))
-		# This is the python dict that the echo can interperet
-	else:
-		# This means the file already exists
-		return returnSSMLResponse(fileName)
+			# You can disable this by setting LOW_BANDWIDTH to False
+			writeToDB(text, toLanguage, accent)
+			# This saves the file in a DB to save bandwidth
+	return returnSSMLResponse(fileName)
+	# This is the python dict that the echo can interperet
 
 ######### This runs anytime echoLinguistics.py is imported  #######################
-
 createmp3List()
 # This creates the list of mp3 files that have already been generated
