@@ -10,6 +10,8 @@ import stat
 # This is used to make ffmpeg executable
 import requests
 # This is used to grab/save the mp3 file from google
+import os
+# This is for granting ffmpeg executable permissions
 
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
@@ -40,10 +42,6 @@ LOW_BANDWIDTH = True
 LANGUAGE_LIST = json.loads(open("supportedLanguages.json").read())
 # This contains all supported languages
 
-######### This runs anytime echoLinguistics.py is imported  #######################
-
-createmp3List()
-# This creates the list of mp3 files that have already been generated
 
 
 ########### Function declarations  ###########################
@@ -72,7 +70,7 @@ def genAccentSSML(intent):
 	# defines the accent language
 	accentAbbreviation = returnLanguageAbbrFromFull(accentVal)
 	# returns accent abbreviation
-	text = generateText(languageName, accentVal, languageAbbreviation)
+	text = generateText("tell me something in {0} in a {1} accent", languageName, accentVal)
 	# generate text that gets returned
 	print("tell me something in {} in a {} accent".format(languageName, accentVal))
 	#purely for debug reasons
@@ -174,15 +172,15 @@ def returnLanguageAbbrFromFull(fullLanguage):
 			#the language that the user
 			return value["Abbreviation"].lower()
 
-def generateText(language, accent):
+def generateText(text, language, accent):
 	languageAbbreviation = returnLanguageAbbrFromFull(language)
 	# this should be a lower case abbreviation: ie. es or en | languageAbbreviation is also accent for this intent
 	if languageAbbreviation != "en":
 		# This simply means the text needs to be translated
-		return translateText(TEXT_TO_SAY.format(language, accent), languageAbbreviation)
+		return translateText(text.format(language, accent), languageAbbreviation)
 	else:
 		# This means it is going from en to en so no translation is required
-		return TEXT_TO_SAY.format(language, accent)
+		return text.format(language, accent)
 
 def speak(text, accent=None, fromLanguage="en", toLanguage="en"):
 	if toLanguage != "en":
@@ -193,7 +191,11 @@ def speak(text, accent=None, fromLanguage="en", toLanguage="en"):
 		accent = toLanguage
 	generateSSML(text, accent)
 	# This is the function that generates the ssml audio object
-	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
+	return returnSSMLResponse("{}.mp3".format(accent))
 	# This is the python dict that the echo can interperet
 
 
+######### This runs anytime echoLinguistics.py is imported  #######################
+
+createmp3List()
+# This creates the list of mp3 files that have already been generated

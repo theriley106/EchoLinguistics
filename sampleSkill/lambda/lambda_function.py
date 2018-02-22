@@ -22,9 +22,6 @@ def returnLanguageSlotValue(intent, default="Spanish"):
 		return default
 
 def genSaySomethingSSML(intent):
-
-
-
 	text = generateText(languageName, languageName, languageAbbreviation)
 	#This generates the text that the alexa says - it will translate from the english in TEXT_TO_SAY
 	if checkInFile(languageAbbreviation) == False:
@@ -45,15 +42,21 @@ def on_intent(intent_request, session):
 	# This is specifically the name of the intent you created
 
 	if intent_name == 'useAccent':
+		accentVal = intent['slots']['accentVal']['value']
+		# defines the accent language
+		accentAbbreviation = echoLinguistics.returnLanguageAbbrFromFull(accentVal)
+		# returns accent abbreviation
 		# alexa say something in german with a spanish accent
 		return genAccentSSML(intent)
 		# This generates the valid response that is sent to the echo
 
 	if intent_name == 'saySomething':
 		# example: alexa say something in german
-		languageName = returnLanguageSlotValue(intent)
+		languageName = echoLinguistics.returnLanguageSlotValue(intent)
 		# Full name of the language sent in the request: ie, English, Spanish, etc.
-		return genSaySomethingSSML(intent)
+		languageAbbr = echoLinguistics.returnLanguageAbbrFromFull(languageName)
+		# This is the abbreviation of language name: ie, English to en
+		return echoLinguistics.speak(text, accent=languageAbbr, toLanguage=languageAbbr)
 		# This is the function that says something without modifying accent
 
 	elif intent_name == 'aboutDev':
