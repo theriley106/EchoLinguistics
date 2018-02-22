@@ -14,7 +14,8 @@ import os
 # This is for granting ffmpeg executable permissions
 import tinys3
 # This is for uploading files to s3
-
+import re
+# This is for grabbing the mp3 names from the val character
 try:
 	SECRET_KEY = open("secretKey.txt").read().strip()
 	# This is the AWS Secret key for interacting with the S3 bucket
@@ -43,7 +44,8 @@ LOW_BANDWIDTH = True
 # This tells the skill whether or not to regrab duplicate files
 LANGUAGE_LIST = json.loads(open("supportedLanguages.json").read())
 # This contains all supported languages
-
+FILENAME_FORMAT = "{0}_{1}_{2}.mp3"
+# 0 = Language; 1 = Accent; 2 = Index in txt file
 
 
 ########### Function declarations  ###########################
@@ -63,23 +65,6 @@ def returnSSMLResponse(ssmlFile, endSession=True):
 				  }
 		}
 
-def genAccentSSML(intent):
-	languageName = returnLanguageSlotValue(intent, default="English")
-	# Full name of the language sent in the request: ie, English, Spanish, etc.
-	languageAbbreviation = returnLanguageAbbrFromFull(languageName)
-	#Defines the abbreviated version of the language sent in the request
-	accentVal = intent['slots']['accentVal']['value']
-	# defines the accent language
-	accentAbbreviation = returnLanguageAbbrFromFull(accentVal)
-	# returns accent abbreviation
-	text = generateText("tell me something in {0} in a {1} accent", languageName, accentVal)
-	# generate text that gets returned
-	print("tell me something in {} in a {} accent".format(languageName, accentVal))
-	#purely for debug reasons
-	generateSSML(text, accentAbbreviation)
-	# This is the function that generates the ssml audio object
-	return returnSSMLResponse("{}.mp3".format(accentAbbreviation))
-	# This is the python dict that the echo can interperet
 
 def uploadFile(fileName):
 	bucketID = extractBucketID(SSML_URL)
@@ -103,13 +88,23 @@ def extractBucketID(ssmlValue):
 	# This just converts the ssml value into a bucket ID for uploadFile
 	return ssmlValue.partition(".com/")[2].partition("/")[0]
 
-def checkInFile(region):
-	# This checks to see if the region is in the file exists already
+def checkInFile(string):
+	# This checks to see if audio has been created with this string
 	for val in open(DB_FILE).read().split("\n"):
 		# This checks to see if the line in the file matches the region
-		if region == val:
-			return True
+		if '|' in str(val):
+			if string == str(val).partition("|")[0].strip():
+				return True
 	return False
+
+def findIndex(string, accent, toLanguage):
+	for val in open(DB_FILE).read().split("\n"):
+		# This checks to see if the line in the file matches the region
+		if '|' in str(val):
+			if string == str(val).partition("|")[0].strip():
+				fileName = re.findall("\S+\.mp3", str(val))
+				if fileName.split('_')[0] == toLanguage and fileName.split("_")[1] == accent:
+					return fileName
 
 def generateSSML(text, region=None):
 	if region == None:
@@ -138,9 +133,6 @@ def saveMP3(mp3URL, region):
 		#this saves the response locally as an actual mp3 file
 		f.write(requests.get(mp3URL).content)
 	return mp3File
-
-def genSSML(fileName):
-	return SSML_URL.format(fileName)
 
 def generateURL(keyWords, region):
 	# This generates the GOOGLE TRANSLATE URL
@@ -184,18 +176,24 @@ def generateText(text, language, accent):
 		# This means it is going from en to en so no translation is required
 		return text.format(language, accent)
 
-def speak(text, accent=None, fromLanguage="en", toLanguage="en"):
+def speak(text, accent=None, fromLanguage="en", toLanguage="en", fileName=None):
 	if toLanguage != "en":
 		# This means you want to translate the text
 		text = translateText(text, toLanguage, fromLanguage)
 		# Input: text | Output: text
 	if accent == None:
 		accent = toLanguage
-	generateSSML(text, accent)
-	# This is the function that generates the ssml audio object
-	return returnSSMLResponse("{}.mp3".format(accent))
-	# This is the python dict that the echo can interperet
-
+	if LOW_BANDWIDTH == True:
+		if checkInFile(text) == True:
+			fileName = findIndex(text, accent, toLanguage)
+	if fileName == None:
+		generateSSML(text, accent)
+		# This is the function that generates the ssml audio object
+		return returnSSMLResponse("{}.mp3".format(accent))
+		# This is the python dict that the echo can interperet
+	else:
+		# This means the file already exists
+		return returnSSMLResponse(fileName)
 
 ######### This runs anytime echoLinguistics.py is imported  #######################
 

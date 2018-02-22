@@ -43,7 +43,7 @@ def on_intent(intent_request, session):
 
 	if intent_name == 'useAccent':
 		# alexa say something in german with a spanish accent
-		languageName = echoLinguistics.returnLanguageSlotValue(intent, default="English")
+		languageName = returnLanguageSlotValue(intent, default="English")
 		# Full name of the language sent in the request: ie, English, Spanish, etc.
 		languageAbbr = echoLinguistics.returnLanguageAbbrFromFull(languageName)
 		#Defines the abbreviated version of the language sent in the request
