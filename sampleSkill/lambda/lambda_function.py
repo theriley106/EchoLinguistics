@@ -42,13 +42,17 @@ def on_intent(intent_request, session):
 	# This is specifically the name of the intent you created
 
 	if intent_name == 'useAccent':
+		# alexa say something in german with a spanish accent
+		languageName = returnLanguageSlotValue(intent, default="English")
+		# Full name of the language sent in the request: ie, English, Spanish, etc.
+		languageAbbr = returnLanguageAbbrFromFull(languageName)
+		#Defines the abbreviated version of the language sent in the request
 		accentVal = intent['slots']['accentVal']['value']
 		# defines the accent language
-		accentAbbreviation = echoLinguistics.returnLanguageAbbrFromFull(accentVal)
+		accentAbbr = echoLinguistics.returnLanguageAbbrFromFull(accentVal)
 		# returns accent abbreviation
-		# alexa say something in german with a spanish accent
-		return genAccentSSML(intent)
-		# This generates the valid response that is sent to the echo
+		return echoLinguistics.speak(TEXT_TO_SAY.format(languageName, accentVal), accent=accentAbbr, toLanguage=languageAbbr)
+		# This is the function that says something without modifying accent
 
 	if intent_name == 'saySomething':
 		# example: alexa say something in german
