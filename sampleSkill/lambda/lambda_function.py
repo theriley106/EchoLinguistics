@@ -1,4 +1,7 @@
-import echoLinguistics
+try:
+	import echoLinguistics
+except:
+	raise Exception("You didn't run the config file properly.  Echo linguistics is not in the sample skill directory.")
 import alexaHelper
 
 SKILL_NAME = "Echo Linguistics"
