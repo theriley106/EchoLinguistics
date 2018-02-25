@@ -1,6 +1,8 @@
 # Echo Linguistics
 ### Using Alexa's Speech Synthesis Markup Language Support to Extend Amazon Echo Voice Capabilities
 
+## [Here is a short video demonstrating the capabilities of this framework](https://www.youtube.com/watch?v=FZ-sDlVdNxE)
+
 ### How does this work?
 
 The Alexa Skill Kit offers 2 ways for developers to play audio on Amazon Echo devices.
