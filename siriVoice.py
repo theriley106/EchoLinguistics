@@ -30,7 +30,7 @@ def genVoice(text, success=True):
 def combineFiles(file1, file2, saveAs):
 	# Combines two mp3 files
 	os.system('ffmpeg -i "concat:{}|{}" -acodec copy {}'.format(file1, file2, saveAs))
-
+	# Combines two mp3 files to create a single file
 
 if __name__ == '__main__':
 	print genVoice(raw_input("Text: "))

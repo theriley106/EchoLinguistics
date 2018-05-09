@@ -44,7 +44,7 @@ if raw_input("Successfully grabbed configuration keys.  Test now? (y/n) ").lower
 	print("Successfully uploaded file to {}".format(fileUpload))
 	os.remove("testUpload.txt")
 
-shutil.copyfile('EchoLinguistics.py', 'sampleSkill/lambda/EchoLinguistics.py')
+shutil.copyfile('echoLinguistics.py', 'sampleSkill/lambda/echoLinguistics.py')
 
 
 #if raw_input("You need to create a ")
