@@ -16,6 +16,8 @@ import tinys3
 # This is for uploading files to s3
 import re
 # This is for grabbing the mp3 names from the val character
+import siriVoice
+# Import the voice for Siri
 
 '''
 Format of DB
@@ -194,28 +196,46 @@ def returnLanguageAbbrFromFull(fullLanguage):
 			#the language that the user
 			return value["Abbreviation"].lower()
 
-def speak(text, accent=None, fromLanguage="en", toLanguage="en", fileName=None):
-	if toLanguage != "en":
-		# This means you want to translate the text
-		text = translateText(text, toLanguage, fromLanguage)
-		# Input: text | Output: text
-	if accent == None:
-		accent = toLanguage
-	if LOW_BANDWIDTH == True:
-		if checkInFile(text) == True:
-			fileName = findIndex(text, accent, toLanguage)
-	if fileName == None:
-		# If the file name doesn't exist it will make it
-		fileName = genFileName(text, accent, toLanguage)
-		# This generates the filename of the speach file.  ie "en_es_111.mp3"
-		generateSSML(text, fileName, accent)
-		# This is the function that generates the ssml audio object
+def speak(text, accent=None, fromLanguage="en", toLanguage="en", fileName=None, siri=False):
+	if siri == False:
+		if toLanguage != "en":
+			# This means you want to translate the text
+			text = translateText(text, toLanguage, fromLanguage)
+			# Input: text | Output: text
+		if accent == None:
+			accent = toLanguage
 		if LOW_BANDWIDTH == True:
-			# You can disable this by setting LOW_BANDWIDTH to False
-			writeToDB(text, toLanguage, accent)
-			# This saves the file in a DB to save bandwidth
-	return returnSSMLResponse(fileName)
-	# This is the python dict that the echo can interperet
+			if checkInFile(text) == True:
+				fileName = findIndex(text, accent, toLanguage)
+		if fileName == None:
+			# If the file name doesn't exist it will make it
+			fileName = genFileName(text, accent, toLanguage)
+			# This generates the filename of the speach file.  ie "en_es_111.mp3"
+			generateSSML(text, fileName, accent)
+			# This is the function that generates the ssml audio object
+			if LOW_BANDWIDTH == True:
+				# You can disable this by setting LOW_BANDWIDTH to False
+				writeToDB(text, toLanguage, accent)
+				# This saves the file in a DB to save bandwidth
+		return returnSSMLResponse(fileName)
+		# This is the python dict that the echo can interperet
+	else:
+		url = siriVoice.genURL(text)
+		# This generates the URL for the siri voice file
+		fileName = 'siritest.mp3'
+		# Filename for the siri voice file
+		mp3File = saveMP3(url, fileName)
+		# This grabs the mp3 file using requests | the region is the file name...
+		editMP3(mp3File)
+		# This doesn't return anything.  TO DO: Maybe a better way of doing this(?)
+		rawSSML = uploadFile(mp3File)
+		# This is raw SSML.  Ie: <speak><audio src='...
+		os.system('rm {}'.format(mp3File))
+		# Removes the mp3 File from the lambda function
+		print("Successfully downloaded")
+		# TODO: Maybe add a verbose == True(?)
+		return returnSSMLResponse(fileName)
+		# This is the python dict that the echo can interperet
 
 ######### This runs anytime echoLinguistics.py is imported  #######################
 createmp3List()

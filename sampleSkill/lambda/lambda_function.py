@@ -31,6 +31,10 @@ def on_intent(intent_request, session):
 	intent_name = intent_request["intent"]["name"]
 	# This is specifically the name of the intent you created
 
+	if intent_name == 'siriVoice':
+		return echoLinguistics.speak("I don't think you'd understand a joke in my language  They are not so funny anyway", siri=True)
+		# This is the function that says something without modifying accent
+
 	if intent_name == 'useAccent':
 		# alexa say something in german with a spanish accent
 		languageName = returnLanguageSlotValue(intent, default="English")
